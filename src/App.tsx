@@ -7,6 +7,13 @@ import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/github-dark.css';
 import { Menu, X, Moon, Sun, ChevronDown, ChevronRight, ChevronLeft, Clock } from 'lucide-react';
 
+const GithubIcon = ({ size = 24 }: { size?: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
+
 // Dynamically import all markdown files as raw strings
 const markdownFiles = import.meta.glob('./notes/**/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
@@ -121,11 +128,24 @@ function Layout({ children }: { children: React.ReactNode }) {
       `}>
         <div className="p-6 flex items-center justify-between shrink-0">
           <Link to="/" className="text-2xl font-extrabold tracking-tight text-primary-500">ByteNotes</Link>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-gray-900 hover:text-gray-900 dark:hover:text-white">
             <X size={24} />
           </button>
         </div>
         <nav className="flex-1 overflow-y-auto px-4 pb-20 space-y-4">
+          <div className="mb-4">
+            <Link
+              to="/"
+              onClick={() => setSidebarOpen(false)}
+              className={`block px-3 py-2 rounded-lg text-sm font-bold transition-all border border-transparent ${
+                location.pathname === '/' 
+                  ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400' 
+                  : 'text-gray-900 hover:bg-gray-100 hover:border-[var(--border-color)] dark:text-gray-300 dark:hover:bg-gray-800/50 dark:hover:text-white'
+              }`}
+            >
+              🏠 Welcome
+            </Link>
+          </div>
           {Object.entries(groupedNav).map(([topKey, topGroup]) => {
             const isTopOpen = openFolders[topKey];
             return (
@@ -215,25 +235,36 @@ function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         <header className="sticky top-0 z-30 flex items-center justify-between px-4 py-4 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--border-color)] lg:justify-end lg:px-8">
           <div className="flex items-center lg:hidden">
-            <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
+            <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-900 hover:text-gray-900 dark:hover:text-white">
               <Menu size={24} />
             </button>
             <span className="ml-2 text-lg font-bold text-primary-500">ByteNotes</span>
           </div>
-          <button 
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2.5 rounded-xl bg-[var(--sidebar-bg)] border border-[var(--border-color)] text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all shadow-sm"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+          <div className="flex items-center gap-3">
+            <a 
+              href="https://github.com/rajmpawar-hash/ByteNotes"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-[var(--sidebar-bg)] border border-[var(--border-color)] text-gray-900 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all shadow-sm"
+              aria-label="GitHub Repository"
+            >
+              <GithubIcon size={20} />
+            </a>
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2.5 rounded-xl bg-[var(--sidebar-bg)] border border-[var(--border-color)] text-gray-900 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all shadow-sm"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          </div>
         </header>
 
         <div className="flex-1 overflow-y-auto p-4 lg:p-8 lg:pt-6">
           <div className="max-w-4xl mx-auto w-full pb-20">
             {/* Breadcrumbs */}
             {currentItem && (
-              <nav className="mb-6 flex items-center flex-wrap text-sm text-gray-500 dark:text-gray-400">
+              <nav className="mb-6 flex items-center flex-wrap text-sm text-gray-900 dark:text-gray-400 font-medium">
                 <Link to="/" className="hover:text-primary-500 transition-colors">Home</Link>
                 {currentItem.parts.map((part, index) => {
                   const cleanPart = part.replace(/^\d+-/, '').replace(/-/g, ' ');
@@ -259,7 +290,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               <div className="mt-16 flex justify-between items-center border-t border-[var(--border-color)] pt-8">
                 {prevItem ? (
                   <Link to={prevItem.route} className="flex flex-col items-start hover:text-primary-500 transition-colors group w-1/2 pr-4">
-                    <span className="text-xs text-gray-500 uppercase tracking-wider mb-1 font-semibold">Previous</span>
+                    <span className="text-xs text-gray-900 dark:text-gray-400 uppercase tracking-wider mb-1 font-bold">Previous</span>
                     <span className="font-medium text-base flex items-center text-gray-900 dark:text-gray-200 group-hover:text-primary-500 transition-colors">
                       <ChevronLeft size={18} className="mr-1 -ml-1 transition-transform group-hover:-translate-x-1" /> 
                       <span className="truncate">{prevItem.title}</span>
@@ -269,7 +300,7 @@ function Layout({ children }: { children: React.ReactNode }) {
                 
                 {nextItem ? (
                   <Link to={nextItem.route} className="flex flex-col items-end hover:text-primary-500 transition-colors group w-1/2 pl-4 text-right">
-                    <span className="text-xs text-gray-500 uppercase tracking-wider mb-1 font-semibold">Next</span>
+                    <span className="text-xs text-gray-900 dark:text-gray-400 uppercase tracking-wider mb-1 font-bold">Next</span>
                     <span className="font-medium text-base flex items-center text-gray-900 dark:text-gray-200 group-hover:text-primary-500 transition-colors">
                       <span className="truncate">{nextItem.title}</span>
                       <ChevronRight size={18} className="ml-1 -mr-1 transition-transform group-hover:translate-x-1" />
@@ -291,8 +322,8 @@ function MarkdownViewer({ content }: { content: string }) {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
-      <div className="mb-8 flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 border-b border-[var(--border-color)] pb-4">
-        <Clock size={16} className="mr-2 opacity-70" />
+      <div className="mb-8 flex items-center text-sm font-bold text-gray-900 dark:text-gray-300 border-b border-[var(--border-color)] pb-4">
+        <Clock size={16} className="mr-2 opacity-80" />
         {readingTime} min read
       </div>
       <div className="markdown-body">
@@ -326,7 +357,7 @@ export default function App() {
           <Route path="*" element={
             <div className="text-center py-20 animate-in fade-in zoom-in duration-500">
               <h1 className="text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">404</h1>
-              <p className="text-xl text-gray-500 mb-8">The note you are looking for does not exist.</p>
+              <p className="text-xl text-gray-900 mb-8">The note you are looking for does not exist.</p>
               <Link to="/" className="px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/30">
                 Go back home
               </Link>
