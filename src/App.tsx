@@ -128,7 +128,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       `}>
         <div className="p-6 flex items-center justify-between shrink-0">
           <Link to="/" className="text-2xl font-extrabold tracking-tight text-primary-500">ByteNotes</Link>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-gray-900 hover:text-gray-900 dark:hover:text-white">
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
             <X size={24} />
           </button>
         </div>
@@ -235,7 +235,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         <header className="sticky top-0 z-30 flex items-center justify-between px-4 py-4 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--border-color)] lg:justify-end lg:px-8">
           <div className="flex items-center lg:hidden">
-            <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-900 hover:text-gray-900 dark:hover:text-white">
+            <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
               <Menu size={24} />
             </button>
             <span className="ml-2 text-lg font-bold text-primary-500">ByteNotes</span>
