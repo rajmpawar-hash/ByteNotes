@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --color-primary-500: #8b5cf6;
   --color-primary-600: #7c3aed;
@@ -9,7 +11,7 @@
 @layer base {
   :root {
     --bg-color: #ffffff;
-    --text-color: #1f2937;
+    --text-color: #000000;
     --sidebar-bg: #f9fafb;
     --border-color: #e5e7eb;
   }
