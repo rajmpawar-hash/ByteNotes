@@ -1,32 +1,80 @@
-# React + TypeScript + Vite
+<div align="center">
+  <img src="https://vitejs.dev/logo.svg" width="120" alt="ByteNotes Logo" />
+  <h1>ByteNotes</h1>
+  <p><strong>A premium, lightning-fast open-source platform for software engineering interview notes.</strong></p>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<br />
 
-Currently, two official plugins are available:
+## 📖 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+ByteNotes is a modern, responsive Progressive Web App (PWA) built specifically for reading and sharing high-quality interview notes. 
 
-## React Compiler
+Rather than sifting through endless unformatted repositories or boring documentation, ByteNotes offers a stunning, zero-friction reading experience with dark/light modes, seamless typography, and a collapsible sidebar.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Currently Featuring:**
+- 🚀 **JavaScript Architecture & Engine Internals**
+- 🔄 **Asynchronous JavaScript (Event Loop, Promises)**
+- 🔒 **Closures, Scoping, and Lexical Environments**
+- ...and more!
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## ✨ Features
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+- **Dynamic Markdown Rendering**: Just drop a `.md` file in the `src/notes/` directory, and ByteNotes instantly renders it into a beautifully styled page.
+- **Auto-Generated Navigation**: No need to manually update sidebars or routes! ByteNotes automatically parses your folder structure and dynamically generates nested, collapsible sidebar menus.
+- **PWA Ready**: Install ByteNotes directly on your phone or desktop for an app-like experience.
+- **Premium Aesthetics**: Built with Tailwind CSS, featuring smooth transitions, beautiful typography, syntax highlighting for code blocks, and a pristine dark mode.
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 🚀 How to Add Notes
+
+Adding new topics is incredibly simple. You don't need to touch a single line of React code!
+
+1. Navigate to the `src/notes/` directory.
+2. To create a new category, create a folder (e.g., `react/` or `system-design/`). 
+   - *Optional:* Prefix your folders/files with numbers to enforce a specific reading order (e.g., `01-basics`). The UI will automatically hide the numbers.
+3. Create a Markdown file inside that folder.
+4. Write your notes using standard Markdown format.
+5. Push to GitHub, and you're done!
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: React 18 + Vite
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM v6
+- **Markdown Parsing**: `react-markdown` + `remark-gfm` + `rehype-highlight`
+- **PWA Integration**: `vite-plugin-pwa`
+
+---
+
+## 💻 Running Locally
+
+If you want to contribute to the UI or preview your notes locally:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rajmpawar-hash/ByteNotes.git
+   cd ByteNotes
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` to view the app!
+
+---
+
+<div align="center">
+  <i>Built with ❤️ for developers preparing for interviews.</i>
+</div>
