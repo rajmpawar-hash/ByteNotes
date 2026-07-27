@@ -57,3 +57,16 @@ console.log(this.a);    // Output: 10
 ```
 
 > **Note:** Variables declared with `let` and `const` are *not* attached to the `window` object (they are kept in a separate block-scoped memory space), even if they are in the global scope!
+
+```javascript
+var x = 10;
+let y = 20;
+const z = 30;
+
+console.log(window.x); // 10 ✅ — var attaches to window
+console.log(window.y); // undefined ❌ — let does NOT attach to window
+console.log(window.z); // undefined ❌ — const does NOT attach to window
+```
+
+> **Cross-platform tip:** Use `globalThis` to access the global object in any environment (Browser, Node.js, Web Workers). `globalThis === window` in browsers, `globalThis === global` in Node.js.
+

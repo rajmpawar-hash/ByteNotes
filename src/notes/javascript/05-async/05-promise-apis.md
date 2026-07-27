@@ -54,3 +54,56 @@ It waits for the first promise to *resolve* (ignoring any rejections along the w
 | `Promise.allSettled` | ALL to settle | **Never** |
 | `Promise.race` | FIRST to settle | First to settle is a rejection |
 | `Promise.any` | FIRST to resolve | ALL reject (AggregateError) |
+
+---
+
+## 🛠️ 5. Code Examples (Same Promises, Different APIs)
+
+```javascript
+const p1 = new Promise((resolve) => setTimeout(() => resolve("P1 ✅"), 3000));
+const p2 = new Promise((_, reject) => setTimeout(() => reject("P2 ❌"), 1000));
+const p3 = new Promise((resolve) => setTimeout(() => resolve("P3 ✅"), 2000));
+```
+
+```javascript
+// Promise.all — Fails fast!
+Promise.all([p1, p2, p3])
+    .then((results) => console.log(results))
+    .catch((err) => console.log(err)); 
+// Output: "P2 ❌" (at 1s — rejects immediately when p2 fails)
+
+// Promise.allSettled — Always waits for everyone
+Promise.allSettled([p1, p2, p3])
+    .then((results) => console.log(results));
+// Output at 3s: [
+//   { status: "fulfilled", value: "P1 ✅" },
+//   { status: "rejected", reason: "P2 ❌" },
+//   { status: "fulfilled", value: "P3 ✅" }
+// ]
+
+// Promise.race — First to finish wins (or loses!)
+Promise.race([p1, p2, p3])
+    .then((val) => console.log(val))
+    .catch((err) => console.log(err));
+// Output: "P2 ❌" (at 1s — p2 settled first, even though it rejected)
+
+// Promise.any — First SUCCESS wins
+Promise.any([p1, p2, p3])
+    .then((val) => console.log(val))
+    .catch((err) => console.log(err));
+// Output: "P3 ✅" (at 2s — skips p2's rejection, waits for first resolve)
+```
+
+---
+
+## 🧹 6. `.finally()` — Cleanup Handler
+`.finally()` runs regardless of whether the promise resolved or rejected. It does NOT receive any arguments.
+
+```javascript
+fetchData()
+    .then((data) => processData(data))
+    .catch((err) => showError(err))
+    .finally(() => hideLoadingSpinner()); // Always runs!
+```
+
+> **Use case:** Hide loading spinners, close database connections, clean up resources — anything that needs to happen regardless of success or failure.

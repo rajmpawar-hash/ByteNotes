@@ -68,3 +68,35 @@ let z = outer();
 z(); // Output: 100! 
 ```
 Since it stores a reference to the memory location of `a`, it prints the updated value, not the original value!
+
+---
+
+## 🔗 Nested Closures (Multi-Level Scope Chain)
+Closures don't just capture from one parent — they capture from the **entire scope chain**!
+
+```javascript
+function grandparent() {
+    let a = 10;
+    function parent() {
+        let b = 20;
+        function child() {
+            let c = 30;
+            console.log(a + b + c); // child closes over BOTH parent AND grandparent
+        }
+        return child;
+    }
+    return parent;
+}
+
+const parentFn = grandparent(); // grandparent() is GONE
+const childFn = parentFn();     // parent() is GONE
+childFn(); // 60! — child still remembers a=10 AND b=20
+```
+
+```mermaid
+flowchart LR
+    A["child()"] -->|"Closure"| B["parent's scope: b = 20"]
+    B -->|"Closure"| C["grandparent's scope: a = 10"]
+```
+
+> **Key Detail:** The closure captures the **entire lexical environment** of each ancestor, not just the variables the function actually uses. However, modern JS engines are smart enough to garbage-collect unused variables from closures for performance.

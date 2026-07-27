@@ -48,3 +48,38 @@ a = undefined; // ❌ DO NOT DO THIS!
 `undefined` is meant to be the system's way of saying "I haven't touched this yet." If you manually assign `undefined`, you destroy that meaning and make debugging very confusing. 
 
 If you need to intentionally clear a variable's value, use `null` instead!
+
+---
+
+## 🧊 3. The Third State: TDZ (Temporal Dead Zone)
+With `let` and `const`, there's actually a **third state** that many people miss! The variable has memory allocated (it IS hoisted), but you can't access it before its declaration line. The error message is **different** from "not defined":
+
+```javascript
+console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
+let a = 10;
+```
+
+Notice the difference:
+- `x is not defined` → Variable was **never declared** anywhere.
+- `Cannot access 'a' before initialization` → Variable **exists** in memory (hoisted), but you're in the Temporal Dead Zone!
+
+```mermaid
+flowchart TD
+    A[Variable Access] --> B{"Was it declared?"}
+    B -->|"No"| C["❌ ReferenceError: x is not defined"]
+    B -->|"Yes, with var"| D["undefined (placeholder)"]
+    B -->|"Yes, with let/const"| E{"Are we past the declaration line?"}
+    E -->|"No (in TDZ)"| F["❌ ReferenceError: Cannot access before initialization"]
+    E -->|"Yes"| G["✅ Actual value"]
+```
+
+## 🔎 4. The `typeof` Trick
+The `typeof` operator is normally safe to use on undeclared variables (it returns `"undefined"` instead of throwing an error). But with TDZ variables, even `typeof` throws!
+
+```javascript
+console.log(typeof undeclaredVar);  // "undefined" — safe, no error!
+console.log(typeof tdzVar);         // ❌ ReferenceError! — let/const in TDZ!
+let tdzVar = 10;
+```
+
+> **Interview Tip:** If asked "what's the difference between `undefined`, `not defined`, and TDZ?" — these are three distinct states, not two!

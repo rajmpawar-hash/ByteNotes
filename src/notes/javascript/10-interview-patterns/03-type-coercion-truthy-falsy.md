@@ -157,16 +157,46 @@ undefined + 1     // NaN (undefined → NaN)
 
 ---
 
+## 🔍 6. The `typeof` Operator (Gotchas!)
+
+`typeof` returns a string indicating the type of a value. But it has some famous gotchas:
+
+```javascript
+typeof 42           // "number"
+typeof "hello"      // "string"
+typeof true         // "boolean"
+typeof undefined    // "undefined"
+typeof Symbol()     // "symbol"
+typeof BigInt(1)    // "bigint"
+
+// The gotchas:
+typeof null         // "object" ← BUG! null is NOT an object. This is a 25-year-old JS bug that can never be fixed.
+typeof []           // "object" ← arrays are objects
+typeof {}           // "object"
+typeof function(){} // "function" ← functions get their own type!
+typeof NaN          // "number" ← NaN is technically a number!
+
+// Undeclared vs TDZ:
+typeof undeclaredVar // "undefined" — safe, no error!
+typeof tdzVar        // ❌ ReferenceError! — let/const in TDZ
+```
+
+> **Interview Tip:** To properly check for `null`, use `value === null`. To check for arrays, use `Array.isArray(value)`.
+
+---
+
 ## 📊 Quick Reference: Type Conversion
 
-| Value | `Number()` | `String()` | `Boolean()` |
-|:---|:---|:---|:---|
-| `""` | 0 | `""` | **false** |
-| `"0"` | 0 | `"0"` | **true** |
-| `"42"` | 42 | `"42"` | true |
-| `true` | 1 | `"true"` | true |
-| `false` | 0 | `"false"` | **false** |
-| `null` | 0 | `"null"` | **false** |
-| `undefined` | NaN | `"undefined"` | **false** |
-| `[]` | 0 | `""` | **true** |
-| `{}` | NaN | `"[object Object]"` | **true** |
+| Value | `Number()` | `String()` | `Boolean()` | `typeof` |
+|:---|:---|:---|:---|:---|
+| `""` | 0 | `""` | **false** | `"string"` |
+| `"0"` | 0 | `"0"` | **true** | `"string"` |
+| `"42"` | 42 | `"42"` | true | `"string"` |
+| `true` | 1 | `"true"` | true | `"boolean"` |
+| `false` | 0 | `"false"` | **false** | `"boolean"` |
+| `null` | 0 | `"null"` | **false** | ⚠️ `"object"` |
+| `undefined` | NaN | `"undefined"` | **false** | `"undefined"` |
+| `[]` | 0 | `""` | **true** | `"object"` |
+| `{}` | NaN | `"[object Object]"` | **true** | `"object"` |
+| `function(){}` | NaN | `"function(){}"` | **true** | `"function"` |
+

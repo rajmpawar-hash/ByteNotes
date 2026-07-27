@@ -35,3 +35,25 @@ api.createOrder(cart, function() {
 This deeply nested, hard-to-read structure is known as **Callback Hell**. It also causes **Inversion of Control** because we lose control of our program and blindly trust `api.createOrder` to execute our callback properly.
 
 *(This is why Promises and `async/await` were invented!)*
+
+---
+
+## 🔗 Callbacks + Closures in the Real World
+Callbacks form closures! This is why event listeners can access variables from their outer scope:
+
+```javascript
+function attachHandler() {
+    let count = 0; // Closed over by the callback below
+    
+    document.getElementById("btn").addEventListener("click", function() {
+        count++;
+        console.log("Button clicked " + count + " times");
+    });
+}
+attachHandler();
+// Every click prints: "Button clicked 1 times", "Button clicked 2 times", ...
+// The callback remembers 'count' via closure even after attachHandler() is done!
+```
+
+> **Key Insight:** Every time you pass a callback to `addEventListener`, `setTimeout`, or any async function, that callback forms a **closure** over its surrounding variables. This is closures + callbacks working hand in hand!
+

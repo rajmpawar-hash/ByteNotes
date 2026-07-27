@@ -65,3 +65,53 @@ When you try to access `x` inside `c()`, JavaScript doesn't just give up if it c
 ## 🛑 3. When does it stop?
 It keeps following the parent references all the way up to the **Global Execution Context**. 
 The parent of the Global Execution Context is `null`. If the engine reaches `null` and still hasn't found the variable, it throws a `ReferenceError`.
+
+---
+
+## 🔀 4. Scope Chain with `let` and `const`
+
+The scope chain lookup works **exactly the same way** for `var`, `let`, and `const` — JavaScript walks up the chain identically. The key difference is **where** variables are stored and **how many scopes** exist in the chain.
+
+With `var`, only functions create new scope boundaries. With `let`/`const`, every `{ }` block creates its own lexical environment!
+
+```javascript
+function a() {
+    var x = 10;     // Lives in a()'s function memory
+    let y = 20;     // Lives in a()'s block/script scope
+    
+    if (true) {
+        var x2 = 30;   // Lives in a()'s function memory (var ignores blocks!)
+        let y2 = 40;   // Lives ONLY in this if-block's scope
+        console.log(y); // 20 ✅ — scope chain finds y in parent
+    }
+    
+    console.log(x2); // 30 ✅ — var leaked out of the block
+    console.log(y2); // ❌ ReferenceError — let is confined to the block
+}
+```
+
+```mermaid
+flowchart BT
+    subgraph Block ["if-block Lexical Environment"]
+        direction TB
+        B_MEM["let y2 = 40"]
+        B_PARENT["Reference → a()"]
+    end
+    
+    subgraph FuncA ["a() Lexical Environment"]
+        direction TB
+        A_MEM["var x = 10, var x2 = 30 + let y = 20"]
+        A_PARENT["Reference → Global"]
+    end
+    
+    subgraph Global ["Global Lexical Environment"]
+        direction TB
+        G_MEM["a = function"]
+        G_PARENT["Reference → null"]
+    end
+    
+    B_PARENT -.->|Scope Chain| FuncA
+    A_PARENT -.->|Scope Chain| Global
+```
+
+> **Key Insight:** `let`/`const` create **more links** in the scope chain (one per `{ }` block), while `var` only creates links at the function level. The lookup mechanism is identical — it's the number of "stops" in the chain that differs!

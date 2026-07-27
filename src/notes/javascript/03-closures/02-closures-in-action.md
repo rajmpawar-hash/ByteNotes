@@ -68,6 +68,23 @@ for (let i = 1; i <= 3; i++) {
 }
 ```
 
+### 🛠️ The Classic Fix (Without `let` — Using IIFE + Closures)
+Interviewers often follow up with: *"What if you can't use `let`? Fix it using only `var`."*
+
+The trick is to create a **new function scope** for each iteration using an IIFE:
+
+```javascript
+for (var i = 1; i <= 3; i++) {
+    (function(j) { // IIFE creates a new scope with its own 'j'
+        setTimeout(function() {
+            console.log(j); // Prints 1, 2, 3!
+        }, 1000);
+    })(i); // Pass current 'i' as 'j'
+}
+```
+
+Each IIFE creates its own closure with a **separate copy** of `i` (captured as `j`), so each callback remembers a different value!
+
 ---
 
 ## 🧩 3. Module Pattern
