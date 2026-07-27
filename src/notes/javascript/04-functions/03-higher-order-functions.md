@@ -1,58 +1,40 @@
-# Higher-Order Functions
+# 🦅 Higher-Order Functions
 
-A **Higher-Order Function (HOF)** is a function that does at least one of the following:
-1. Takes one or more functions as arguments (a callback).
+A **Higher-Order Function (HOF)** is simply a function that does at least one of the following:
+1. Takes one or more functions as arguments.
 2. Returns a function as its result.
 
-If a function does neither of these, it is a First-Order Function.
-
-## Why use Higher-Order Functions?
-HOFs are the backbone of Functional Programming. They allow us to write code that is highly modular, reusable, and declarative. 
-
-Instead of writing complex logic over and over, we can abstract the logic into a Higher-Order Function and pass smaller, focused functions into it.
-
-## Example: Calculating Areas and Perimeters
-
-Imagine we have an array of circle radiuses, and we want to calculate the area, circumference, and diameter for all of them.
-
-### The Bad Way (WET Code - Write Everything Twice)
-```javascript
-const radiusArr = [3, 1, 2, 4];
-
-const calculateArea = function (radiusArr) {
-    const output = [];
-    for (let i = 0; i < radiusArr.length; i++) {
-        output.push(Math.PI * radiusArr[i] * radiusArr[i]);
-    }
-    return output;
-}
-
-const calculateCircumference = function (radiusArr) {
-    const output = [];
-    for (let i = 0; i < radiusArr.length; i++) {
-        output.push(2 * Math.PI * radiusArr[i]);
-    }
-    return output;
-}
+```mermaid
+flowchart TD
+    A[Higher-Order Function]
+    B(Takes a function as argument)
+    C(Returns a function)
+    
+    A --> B
+    A --> C
 ```
-Notice how 90% of the code is identical? We are repeating the array creation, the loop, and the pushing logic.
 
-### The Good Way (Using a Higher-Order Function)
-Let's abstract the repetitive logic into a HOF, and pass the specific math formulas as callbacks.
+## 🧠 Why use HOFs?
+Higher-Order Functions allow us to write highly modular, reusable, and declarative code. Instead of writing a massive loop that calculates areas, circumferences, and diameters of circles, we can abstract the logic!
+
+## 🛠️ Building our own HOF
+
+Let's say we have an array of circle radii and we want to calculate the area for each one.
+
+Instead of writing a specific function for calculating Area, we write a generic HOF called `calculate` that accepts the logic (the callback function) as an argument!
 
 ```javascript
-const radiusArr = [3, 1, 2, 4];
+const radii = [3, 1, 2, 4];
 
-// Callbacks (First-Order Functions)
-const area = function (radius) {
+// The logic functions (Callbacks)
+const area = function(radius) {
     return Math.PI * radius * radius;
 }
-
-const circumference = function (radius) {
+const circumference = function(radius) {
     return 2 * Math.PI * radius;
 }
 
-// Our Higher-Order Function!
+// Our generic Higher-Order Function
 const calculate = function(arr, logic) {
     const output = [];
     for (let i = 0; i < arr.length; i++) {
@@ -61,10 +43,11 @@ const calculate = function(arr, logic) {
     return output;
 }
 
-console.log(calculate(radiusArr, area));
-console.log(calculate(radiusArr, circumference));
+// Using our HOF!
+console.log(calculate(radii, area));
+console.log(calculate(radii, circumference));
 ```
 
-By using a Higher-Order Function, our code is cleaner, infinitely more scalable, and adheres to the DRY (Don't Repeat Yourself) principle!
+This makes our code incredibly **DRY (Don't Repeat Yourself)**!
 
-*(Fun fact: our `calculate` function behaves exactly like the built-in `Array.prototype.map` function!)*
+*(Fun Fact: The `calculate` function we just wrote is essentially a custom implementation of `Array.prototype.map`!)*

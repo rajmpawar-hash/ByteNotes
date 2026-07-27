@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import mermaid from 'mermaid';
 import 'highlight.js/styles/github-dark.css';
 import { Menu, X, Moon, Sun, ChevronDown, ChevronRight, ChevronLeft, Clock } from 'lucide-react';
 
@@ -316,6 +317,60 @@ function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function useThemeObserver() {
+  const [isDark, setIsDark] = useState(
+    typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : false
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return isDark;
+}
+
+function MermaidChart({ code }: { code: string }) {
+  const [svgCode, setSvgCode] = useState<string>('');
+  const isDark = useThemeObserver();
+
+  useEffect(() => {
+    let isMounted = true;
+    
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      securityLevel: 'loose',
+    });
+
+    const renderChart = async () => {
+      try {
+        const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+        const { svg } = await mermaid.render(id, code);
+        if (isMounted) setSvgCode(svg);
+      } catch (e) {
+        console.error('Mermaid render error', e);
+      }
+    };
+    
+    renderChart();
+    return () => { isMounted = false; };
+  }, [code, isDark]);
+
+  return (
+    <div 
+      className="mermaid flex justify-center my-8 bg-[var(--bg-color)] p-4 rounded-xl shadow-sm border border-[var(--border-color)] overflow-x-auto" 
+      dangerouslySetInnerHTML={{ __html: svgCode }} 
+    />
+  );
+}
+
 function MarkdownViewer({ content }: { content: string }) {
   const wordCount = content.trim().split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
@@ -329,10 +384,84 @@ function MarkdownViewer({ content }: { content: string }) {
       <div className="markdown-body">
         <ReactMarkdown 
           remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight]}
+          rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+          components={{
+            a({ node, href, children, ...props }) {
+              if (href && href.startsWith('/')) {
+                return (
+                  <Link to={href} {...props}>
+                    {children}
+                  </Link>
+                );
+              }
+              return (
+                <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+                  {children}
+                </a>
+              );
+            },
+            code(props) {
+              const {children, className, node, ...rest} = props;
+              const match = /language-(\w+)/.exec(className || '');
+              if (match && match[1] === 'mermaid') {
+                return <MermaidChart code={String(children).replace(/\n$/, '')} />;
+              }
+              return (
+                <code {...rest} className={className}>
+                  {children}
+                </code>
+              );
+            }
+          }}
         >
           {content}
         </ReactMarkdown>
+      </div>
+    </div>
+  );
+}
+
+function WelcomePage({ content }: { content: string }) {
+  return (
+    <div className="w-full">
+      <MarkdownViewer content={content} />
+      
+      <div className="mt-8 mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 fill-mode-both">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-[var(--border-color)]">
+          📚 Available Categories
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Object.entries(groupedNav).map(([topKey, topGroup]) => (
+            <div key={topKey} className="p-6 rounded-2xl bg-[var(--bg-color)] border border-[var(--border-color)] hover:border-primary-500 transition-all shadow-sm hover:shadow-md group">
+              <h3 className="text-lg font-extrabold mb-4 text-primary-500 uppercase tracking-wider group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                {topGroup.display}
+              </h3>
+              <ul className="space-y-4">
+                {Object.entries(topGroup.subGroups).map(([subKey, subGroup]) => (
+                  <li key={subKey}>
+                    <div className="text-sm font-bold text-gray-900 dark:text-gray-200 mb-2 uppercase tracking-wide opacity-80">{subGroup.display}</div>
+                    <ul className="pl-3 space-y-2 border-l-2 border-gray-200 dark:border-gray-800">
+                      {subGroup.items.map(item => (
+                        <li key={item.route}>
+                          <Link to={item.route} className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors block truncate">
+                            {item.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+                {topGroup.items.map(item => (
+                  <li key={item.route}>
+                    <Link to={item.route} className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors block truncate">
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -343,7 +472,7 @@ export default function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<MarkdownViewer content={markdownFiles['./notes/welcome.md'] || '# Welcome to ByteNotes\n\nPlease add a `welcome.md` to the `src/notes/` directory.'} />} />
+          <Route path="/" element={<WelcomePage content={markdownFiles['./notes/welcome.md'] || '# Welcome to ByteNotes\n\nPlease add a `welcome.md` to the `src/notes/` directory.'} />} />
           {Object.entries(markdownFiles).map(([path, content]) => {
             const { route } = formatPath(path);
             return (

@@ -1,29 +1,51 @@
-# JS Engine Architecture (Google V8)
+# ⚙️ JS Engine Architecture (V8)
 
-JavaScript is not a machine code that your computer's CPU can understand directly. It needs an engine to translate it. The most famous engine is **V8** (built by Google and used in Chrome and Node.js).
+A JavaScript engine is not a machine. It's a highly complex piece of software that takes your human-readable JavaScript code and translates it into machine code that the computer can actually execute.
 
-## The Journey of JS Code
+```mermaid
+flowchart TD
+    A[JavaScript Code] --> B(Parsing)
+    B --> C(Compilation & Interpretation)
+    C --> D(Execution)
+    
+    subgraph Engine Core
+        C
+        D
+    end
+```
 
-When you write JavaScript, it goes through three major steps inside the engine:
-1. **Parsing**
-2. **Compilation**
-3. **Execution**
+## 🏗️ 1. Parsing Phase
+Before doing anything, the engine reads your code.
+1. **Lexical Analysis:** Breaks code into "tokens" (keywords, variables, operators).
+2. **Syntax Analysis (AST):** Converts those tokens into an Abstract Syntax Tree (AST).
 
-### 1. Parsing
-The engine reads your code line by line and breaks it down into small tokens (like `let`, `a`, `=`, `10`). 
-Then, a Syntax Parser takes these tokens and builds an **Abstract Syntax Tree (AST)**. You can think of an AST as a giant JSON object that maps out the structure of your entire program.
+```mermaid
+flowchart LR
+    A[const a = 5;] --> B[Tokens: const, a, =, 5] --> C[AST]
+```
 
-### 2. Compilation (JIT Compilation)
-Historically, programming languages were either *interpreted* (translated line-by-line during runtime, which is slow) or *compiled* (translated all at once before running, which is fast).
+## ⚡ 2. Compilation (JIT Compilation)
+Historically, languages were either interpreted (fast to start, slow to run) or compiled (slow to start, fast to run). 
+Modern JS engines (like V8) use **Just-In-Time (JIT) Compilation**, which combines the best of both!
 
-Modern JavaScript engines use **Just-In-Time (JIT) Compilation**, which is the best of both worlds!
-- The code goes to an **Interpreter** which starts running the code immediately (line by line).
-- At the exact same time, the code is sent to a **Compiler**.
-- As the Interpreter runs the code, the Compiler watches. If it sees code that is run multiple times (like a loop), it compiles that specific chunk into highly optimized machine code on the fly and swaps it out!
+1. The **Interpreter** (called Ignition in V8) quickly translates AST to unoptimized Bytecode so the program can start running immediately.
+2. The **Profiler** watches the code as it runs, looking for "hot" areas (code that runs repeatedly, like loops).
+3. The **Compiler** (called TurboFan in V8) takes those hot areas and compiles them down to highly optimized Machine Code.
 
-### 3. Execution
-The compiled machine code and the interpreted code are fed into the **Execution Context** and the **Call Stack** (which is part of the JS Engine).
+## 🏃 3. Execution Phase
+The optimized machine code is executed using two main memory structures:
 
-This phase relies heavily on:
-- **Memory Heap:** A large unstructured pool of memory where variables and objects are stored.
-- **Garbage Collector:** A background process that constantly runs using an algorithm called "Mark and Sweep". It finds variables and objects in the memory heap that are no longer being used by your code and deletes them to free up space.
+- **Memory Heap:** A large unstructured region of memory used for storing objects and functions (reference types).
+- **Call Stack:** Structured LIFO memory used for keeping track of the Execution Contexts and primitive variables.
+
+```mermaid
+flowchart TD
+    A[Memory Heap] -->|Stores| B(Objects, Arrays, Functions)
+    C[Call Stack] -->|Stores| D(Primitives, Execution Contexts)
+```
+
+## 🧹 Garbage Collection
+JavaScript handles memory management automatically. It uses an algorithm called **Mark and Sweep**.
+- It starts at the root (the global object).
+- It "marks" all objects that are reachable/referenced.
+- It "sweeps" (deletes) anything that is not marked, freeing up the memory in the Heap!

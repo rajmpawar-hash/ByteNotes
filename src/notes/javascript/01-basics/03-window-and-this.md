@@ -1,45 +1,59 @@
-# The Global Object (window) and `this`
+# 🪟 Window & `this` Keyword
 
-What happens when you run a completely empty JavaScript file? 
+Even if you run a completely empty JavaScript file, the JavaScript Engine still does a lot of work behind the scenes. 
 
-Even if you write absolutely zero lines of code, the JavaScript engine still does a lot of work behind the scenes. It creates the **Global Execution Context** and it sets up global memory space.
+It creates the **Global Execution Context** and sets up global objects for you.
 
-Along with this, it automatically creates two very important things:
-1. The **Global Object**
-2. The `this` keyword
-
-## The Window Object
-
-In the browser, the Global Object is known as `window`. It contains a massive collection of functions and properties provided by the browser (like `setTimeout`, `localStorage`, `document`, etc.).
-
-If you run JavaScript in Node.js, the global object is simply called `global`.
-
-## The `this` Keyword
-
-Whenever an execution context is created, a `this` keyword is generated along with it. 
-
-At the global level (outside of any functions), `this` points directly to the Global Object.
-
-```javascript
-console.log(this === window); // true (in a browser environment)
+```mermaid
+flowchart TD
+    A[Empty JS File] --> B[JS Engine Starts]
+    B --> C[Global Execution Context]
+    C --> D(window Object)
+    C --> E(this Keyword)
+    
+    D -.->|In Browsers| F[Global Window Object]
+    E -.->|In Global Scope| G[Points to Window]
 ```
 
-## Global Space
+## 🌍 1. The Global Object (`window`)
+Wherever JavaScript runs, the engine provides a global object.
+- In browsers, this global object is called `window`.
+- In Node.js, it's called `global`.
 
-Any variable or function that you declare *outside* of a function is attached to the global space. Because they are in the global space, they are automatically attached to the Global Object.
+It comes packed with functions and properties (like `setTimeout`, `console.log`) that you can use anywhere in your code.
+
+## 🎯 2. The `this` Keyword
+Along with the global object, the JS engine also creates the `this` keyword.
+
+At the global level (outside of any function), `this` always points to the global object.
 
 ```javascript
-var fruit = "Apple";
-
-function showFruit() {
-    console.log("Inside function");
-}
-
-// These all access the exact same variable!
-console.log(fruit);
-console.log(window.fruit);
-console.log(this.fruit);
+console.log(this === window); // Output: true
 ```
 
-> [!WARNING]
-> While `var` declarations are attached to the `window` object, variables declared with `let` and `const` are *not* attached to the `window` object, even if they are declared in the global scope.
+---
+
+## 🔗 3. Global Variables
+
+Whenever you create variables or functions in the global scope (not inside any function), they are automatically attached to the global `window` object.
+
+```mermaid
+stateDiagram-v2
+    state "var a = 10;" as VarA
+    state "function b() {}" as FuncB
+    
+    VarA --> AttachedToWindow
+    FuncB --> AttachedToWindow
+```
+
+You can access them in three different ways, and they all mean the exact same thing:
+
+```javascript
+var a = 10;
+
+console.log(a);         // Output: 10
+console.log(window.a);  // Output: 10
+console.log(this.a);    // Output: 10
+```
+
+> **Note:** Variables declared with `let` and `const` are *not* attached to the `window` object (they are kept in a separate block-scoped memory space), even if they are in the global scope!
