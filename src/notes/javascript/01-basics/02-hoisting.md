@@ -1,51 +1,70 @@
-# Hoisting in JavaScript
+# 🎈 Hoisting in JavaScript
 
-**Hoisting** is a phenomenon in JavaScript where you can access variables and functions even *before* you have initialized or declared them in your code.
+Hoisting is a phenomenon in JavaScript where you can access variables and functions **before** you've actually initialized them in the code.
 
-This behavior often confuses developers coming from other languages, but it makes perfect sense once you understand the **Memory Creation Phase** of the Execution Context.
+```mermaid
+flowchart TD
+    A[Hoisting] --> B{What is it?}
+    B --> C[Functions]
+    B --> D[Variables]
+    
+    C -->|Fully Hoisted| E(Can call before declaration)
+    D -->|Partially Hoisted| F(Value is undefined initially)
+```
 
-## How it Works
+## 🤔 How does it work?
+Remember the two phases of the Execution Context?
+In **Phase 1 (Memory Creation)**, JavaScript scans the code and allocates memory for variables and functions *before* executing a single line of code.
 
-Before JavaScript executes a single line of your code, it scans the entire script and allocates memory for every variable and function. 
-
-During this phase:
-- **Functions** are stored in memory with their *entire code block*.
-- **Variables** (declared with `var`) are stored in memory and given a special placeholder value called `undefined`.
-
-## Example in Action
+### 📝 1. Variable Hoisting
+- Variables declared with `var` are allocated memory and initialized with `undefined`.
+- If you try to print them before they are declared, they won't throw an error; they will just print `undefined`.
 
 ```javascript
-// Calling the function before declaring it!
-greet(); 
+console.log(x); // Output: undefined
+var x = 7;
+console.log(x); // Output: 7
+```
 
-// Accessing the variable before assigning it!
-console.log(age); 
+### ⚙️ 2. Function Hoisting
+- Regular function declarations are copied **entirely** into memory during the creation phase.
+- You can invoke the function even before the line where it is written!
 
-var age = 25;
+```javascript
+getName(); // Output: "Hello World"
 
-function greet() {
-    console.log("Welcome to ByteNotes!");
+function getName() {
+    console.log("Hello World");
 }
 ```
 
-**Output:**
-```text
-Welcome to ByteNotes!
-undefined
+---
+
+## 🚫 The Arrow Function Catch
+
+Arrow functions behave like **variables**, not regular functions!
+
+```mermaid
+stateDiagram-v2
+    state "Regular Function" as RF
+    state "Arrow Function" as AF
+    
+    RF --> StoredAsCode: Memory Phase
+    AF --> StoredAsUndefined: Memory Phase
 ```
 
-Because of hoisting, the `greet` function runs perfectly even though it's called at the top of the file. However, `age` prints `undefined` because during the memory allocation phase, `var` variables are assigned `undefined` until the code execution phase reaches the actual line where `25` is assigned.
-
-## Arrow Functions and Hoisting
-
-Be careful! If you define a function using an arrow function or a function expression and assign it to a `var`, it behaves like a regular variable, not a function.
+If you try to call an arrow function before declaring it, you'll get an error, because in the memory phase, it is treated as a variable and set to `undefined` (and you can't invoke `undefined`).
 
 ```javascript
-hello(); // Uncaught TypeError: hello is not a function
+getName(); // TypeError: getName is not a function
 
-var hello = () => {
-    console.log("Hi there!");
+var getName = () => {
+    console.log("Hello World");
 }
 ```
 
-During memory creation, `hello` is treated as a variable and given the value `undefined`. When you try to invoke `undefined()`, JavaScript throws an error!
+## 🔍 Key Takeaways
+1. **Hoisting** is just the result of JavaScript creating memory for variables/functions before executing code.
+2. `var` is initialized to `undefined`.
+3. `function () {}` is fully loaded into memory.
+4. Arrow functions are treated as variables, so they are initialized to `undefined`.
