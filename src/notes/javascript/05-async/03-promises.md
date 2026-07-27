@@ -48,11 +48,20 @@ flowchart TD
 
 ```javascript
 const myPromise = new Promise(function(resolve, reject) {
-    // Do some async task
-    if (success) {
-        resolve("Task complete!"); // Changes state to fulfilled
-    } else {
-        reject(new Error("Task failed!")); // Changes state to rejected
-    }
+    // Simulating an async task (e.g., a network request)
+    setTimeout(function() {
+        const data = { user: "Raj", id: 42 };
+        
+        if (data) {
+            resolve(data); // ✅ Changes state to fulfilled
+        } else {
+            reject(new Error("Failed to fetch user!")); // ❌ Changes state to rejected
+        }
+    }, 2000);
 });
+
+// Consuming the promise
+myPromise
+    .then((result) => console.log("Got:", result))
+    .catch((err) => console.error("Error:", err));
 ```

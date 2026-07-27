@@ -54,3 +54,30 @@ console.log(sum); // 17
 ```
 
 > **Pro Tip:** You can chain these together! Because `map` and `filter` return arrays, you can do `arr.filter(...).map(...).reduce(...)` to perform highly complex data transformations in just a few lines of code!
+
+---
+
+## 🧮 4. Common Interview Pattern: Frequency Counter with `reduce()`
+
+A very popular interview question: *"Count the occurrences of each item in an array."*
+
+```javascript
+const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
+
+const count = fruits.reduce(function(acc, curr) {
+    acc[curr] = (acc[curr] || 0) + 1;
+    return acc;
+}, {}); // Initial value is an empty object!
+
+console.log(count); // { apple: 3, banana: 2, orange: 1 }
+```
+
+```mermaid
+flowchart LR
+    A["Initial: {}"] --> B["apple: {apple: 1}"]
+    B --> C["banana: {apple: 1, banana: 1}"]
+    C --> D["apple: {apple: 2, banana: 1}"]
+    D --> E["...and so on"]
+```
+
+> **Key Insight:** `reduce()` is not just for numbers! The accumulator can be **any data type** — an object, an array, a string, or even a boolean. This is what makes `reduce` so powerful.

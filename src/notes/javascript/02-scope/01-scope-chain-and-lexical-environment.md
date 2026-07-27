@@ -52,7 +52,7 @@ It consists of two things:
 1. The **Local Memory** (the variables and functions defined inside it).
 2. A **Reference to the Lexical Environment of its Parent**.
 
-*Lexical* means "in hierarchy" or "in sequence". It simply refers to where the code is physically written in your script. Because `c` is written inside `a`, the parent of `c` is `a`!
+*Lexical* comes from the word "lexis" meaning **"relating to the text/source code"**. It refers to where the code is **physically written** in your script — not where it is called from, but where it was defined. Because `c` is *written inside* `a`, the lexical parent of `c` is `a`!
 
 ## 🔗 2. The Scope Chain Lookup
 
