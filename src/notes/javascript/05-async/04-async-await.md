@@ -62,3 +62,45 @@ async function getData() {
     }
 }
 ```
+
+---
+
+## 🔄 4. Promise Chains vs Async/Await (Side-by-Side)
+
+A very common interview question is: *"Rewrite this `.then()` chain using async/await."*
+
+**Using `.then()` chains:**
+```javascript
+function fetchUserPosts() {
+    fetch("/api/user")
+        .then((res) => res.json())
+        .then((user) => fetch(`/api/posts/${user.id}`))
+        .then((res) => res.json())
+        .then((posts) => console.log(posts))
+        .catch((err) => console.error(err));
+}
+```
+
+**Rewritten with `async/await`:**
+```javascript
+async function fetchUserPosts() {
+    try {
+        const userRes = await fetch("/api/user");
+        const user = await userRes.json();
+        const postsRes = await fetch(`/api/posts/${user.id}`);
+        const posts = await postsRes.json();
+        console.log(posts);
+    } catch (err) {
+        console.error(err);
+    }
+}
+```
+
+```mermaid
+flowchart LR
+    A[".then() Chains"] -->|"Same behavior"| B["async/await"]
+    A -.->|Error handling| C[".catch()"]
+    B -.->|Error handling| D["try...catch"]
+```
+
+> **Key Insight:** `async/await` is just syntactic sugar over Promises. Under the hood, it still uses Promises. The only difference is readability — async/await reads top-to-bottom like synchronous code!

@@ -93,16 +93,30 @@ Once `return ans` happens, the Local Execution Context is completely **deleted**
 With all these Execution Contexts being created and deleted, how does JavaScript keep track? **The Call Stack**.
 
 ```mermaid
-flowchart BT
-    subgraph Stack ["The Call Stack (LIFO)"]
+flowchart LR
+    subgraph Step1 ["Step 1: Program Starts"]
         direction BT
-        B["square Local Execution Context"]
-        A["Global Execution Context"]
+        S1_A["GEC"]
     end
     
-    A -.->|"Pushed when program starts"| A
-    B -.->|"Pushed when square() is called"| B
-    B -.->|"Popped when return is hit"| StackOut["Destroyed"]
+    subgraph Step2 ["Step 2: square() Called"]
+        direction BT
+        S2_B["square EC"]
+        S2_A["GEC"]
+    end
+    
+    subgraph Step3 ["Step 3: return hit"]
+        direction BT
+        S3_X["square EC ❌"]
+        S3_A["GEC"]
+    end
+    
+    subgraph Step4 ["Step 4: Program Ends"]
+        direction BT
+        S4_X["GEC ❌"]
+    end
+    
+    Step1 --> Step2 --> Step3 --> Step4
 ```
 
 - 📥 It operates on the **LIFO (Last In, First Out)** principle.

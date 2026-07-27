@@ -45,12 +45,16 @@ function getName() {
 Arrow functions behave like **variables**, not regular functions!
 
 ```mermaid
-stateDiagram-v2
-    state "Regular Function" as RF
-    state "Arrow Function" as AF
+flowchart TD
+    A[Declaration Type] --> B["function declaration"]
+    A --> C["var"]
+    A --> D["let / const"]
+    A --> E["Arrow Function via var"]
     
-    RF --> StoredAsCode: Memory Phase
-    AF --> StoredAsUndefined: Memory Phase
+    B -->|Memory Phase| F["✅ Fully hoisted entire function stored"]
+    C -->|Memory Phase| G["⚠️ Hoisted as undefined"]
+    D -->|Memory Phase| H["🚫 Hoisted but in TDZ ReferenceError if accessed"]
+    E -->|Memory Phase| I["⚠️ Treated as variable TypeError if called"]
 ```
 
 If you try to call an arrow function before declaring it, you'll get an error, because in the memory phase, it is treated as a variable and set to `undefined` (and you can't invoke `undefined`).

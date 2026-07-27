@@ -41,9 +41,9 @@ flowchart TD
             Q2["Callback Queue: cb function waiting..."]
         end
         
-        Stack -.->|Moves timer to background| APIs
-        APIs -.->|Timer finishes after 5s| Queues
-        Queues -.->|Event Loop pushes cb back| Stack
+        Stack -->|"Step 1: Moves timer to background"| APIs
+        APIs -->|"Step 2: Timer finishes after 5s"| Queues
+        Queues -->|"Step 3: Event Loop pushes cb back"| Stack
     end
 ```
 
@@ -88,3 +88,48 @@ The Event Loop is like a security guard at the door of the Call Stack. It has ex
 4. Once the Microtask Queue is completely empty, it checks the **Callback Queue** and pushes tasks to the Call Stack.
 
 > **Starvation:** If Microtasks keep generating more Microtasks, the regular Callback Queue will never get a chance to run! This is called starvation.
+
+---
+
+## 🧪 4. Event Loop Output Quiz
+
+This is the **#1 most asked** event loop interview question. What does this print, and why?
+
+```javascript
+console.log("Start");
+
+setTimeout(function() {
+    console.log("setTimeout");
+}, 0);
+
+Promise.resolve().then(function() {
+    console.log("Promise");
+});
+
+console.log("End");
+```
+
+### ✅ Answer:
+```
+Start
+End
+Promise
+setTimeout
+```
+
+### 🧠 Why?
+1. `console.log("Start")` — Runs immediately on the Call Stack. **Output: `Start`**
+2. `setTimeout(..., 0)` — Handed to the Web API, and the callback is placed in the **Callback Queue** (even though delay is 0!).
+3. `Promise.resolve().then(...)` — The `.then()` callback is placed in the **Microtask Queue**.
+4. `console.log("End")` — Runs immediately on the Call Stack. **Output: `End`**
+5. Call Stack is now empty. Event Loop checks Microtask Queue first → **Output: `Promise`**
+6. Microtask Queue is empty. Event Loop checks Callback Queue → **Output: `setTimeout`**
+
+```mermaid
+flowchart TD
+    A["1. Call Stack: log Start"] --> B["2. setTimeout → Web API → Callback Queue"]
+    B --> C["3. Promise.then → Microtask Queue"]
+    C --> D["4. Call Stack: log End"]
+    D --> E["5. Stack empty → Microtask: log Promise"]
+    E --> F["6. Microtask empty → Callback: log setTimeout"]
+```

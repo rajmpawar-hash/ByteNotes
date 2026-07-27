@@ -31,6 +31,17 @@ Modern JS engines (like V8) use **Just-In-Time (JIT) Compilation**, which combin
 1. The **Interpreter** (called Ignition in V8) quickly translates AST to unoptimized Bytecode so the program can start running immediately.
 2. The **Profiler** watches the code as it runs, looking for "hot" areas (code that runs repeatedly, like loops).
 3. The **Compiler** (called TurboFan in V8) takes those hot areas and compiles them down to highly optimized Machine Code.
+4. If assumptions made during optimization turn out to be wrong (e.g., a variable type changes), TurboFan **deoptimizes** and sends the code back to Ignition!
+
+```mermaid
+flowchart LR
+    A[AST] --> B["Ignition (Interpreter)"]
+    B --> C[Bytecode]
+    C --> D["Profiler (monitors hot code)"]
+    D -->|"Hot code detected"| E["TurboFan (Compiler)"]
+    E --> F[Optimized Machine Code]
+    F -->|"Assumptions broken? Deoptimize!"| B
+```
 
 ## 🏃 3. Execution Phase
 The optimized machine code is executed using two main memory structures:

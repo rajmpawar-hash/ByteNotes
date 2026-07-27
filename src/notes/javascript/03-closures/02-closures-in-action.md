@@ -67,3 +67,66 @@ for (let i = 1; i <= 3; i++) {
     }, 1000);
 }
 ```
+
+---
+
+## 🧩 3. Module Pattern
+Closures allow us to create a private scope with controlled public access — this is the **Module Pattern**, which was the standard way to organize JavaScript before ES6 modules.
+
+```javascript
+const BankAccount = (function() {
+    let balance = 0; // Private! No one can touch this directly.
+    
+    return {
+        deposit: function(amount) { balance += amount; },
+        withdraw: function(amount) { balance -= amount; },
+        getBalance: function() { return balance; }
+    };
+})();
+
+BankAccount.deposit(500);
+BankAccount.withdraw(200);
+console.log(BankAccount.getBalance()); // 300
+console.log(BankAccount.balance); // undefined (Private!)
+```
+
+The **IIFE** (Immediately Invoked Function Expression) runs once, creates the closure, and returns the public API. The `balance` variable lives on inside the closure forever, hidden from the outside world.
+
+```mermaid
+flowchart TD
+    A[IIFE Runs Once] --> B[Creates Private Scope]
+    B --> C["balance = 0 (Hidden)"]
+    B --> D["Returns Public API"]
+    D --> E["deposit()"]
+    D --> F["withdraw()"]
+    D --> G["getBalance()"]
+    E & F & G -.->|Access via Closure| C
+```
+
+---
+
+## 🍛 4. Currying
+Currying is when you transform a function that takes multiple arguments into a **sequence of functions**, each taking a single argument. Closures make this possible!
+
+```javascript
+// Normal function
+function add(a, b) {
+    return a + b;
+}
+add(2, 3); // 5
+
+// Curried version
+function curriedAdd(a) {
+    return function(b) { // This inner function closes over 'a'
+        return a + b;
+    }
+}
+curriedAdd(2)(3); // 5
+
+// Create reusable partial functions!
+const addFive = curriedAdd(5);
+addFive(10); // 15
+addFive(20); // 25
+```
+
+> **Why is this useful?** Currying lets you create specialized functions from generic ones. `addFive` will always remember `a = 5` because of closures!
