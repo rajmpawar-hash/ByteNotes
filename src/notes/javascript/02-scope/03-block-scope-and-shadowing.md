@@ -75,3 +75,38 @@ let a = 20;
     var a = 20; // ❌ SyntaxError: Identifier 'a' has already been declared
 }
 ```
+
+### ✅ But the reverse IS allowed!
+You CAN shadow a `var` with a `let` inside a block — because `let` stays confined to the block and doesn't try to leak out:
+
+```javascript
+var a = 20;
+{
+    let a = 30; // ✅ Totally fine! let stays in its block.
+    console.log(a); // 30
+}
+console.log(a); // 20 (var is untouched)
+```
+
+### 🏗️ The Function Boundary Exception
+You CAN shadow `let` with `var` if the `var` is inside a **function** (not just a block), because `var` is function-scoped and won't leak beyond the function:
+
+```javascript
+let a = 20;
+function test() {
+    var a = 30; // ✅ Fine! var is trapped inside the function.
+    console.log(a); // 30
+}
+test();
+console.log(a); // 20 (let is untouched)
+```
+
+```mermaid
+flowchart TD
+    A["Shadowing Rules"] --> B{"Inner declaration?"}
+    B -->|"let shadowing var"| C["✅ Always allowed"]
+    B -->|"var shadowing let"| D{"Inside a function?"}
+    D -->|"Yes"| E["✅ Allowed (var trapped by function)"]
+    D -->|"No (just a block)"| F["❌ SyntaxError (var leaks out)"]
+```
+

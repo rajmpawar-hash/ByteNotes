@@ -156,6 +156,33 @@ user.showFriends();
 
 ---
 
+## 🏆 6. Binding Priority (When Rules Conflict)
+What happens if multiple binding rules apply at the same time? JavaScript resolves conflicts using this priority order:
+
+```mermaid
+flowchart LR
+    A["1. new Binding"] -->|"Highest"| B["2. Explicit (call/apply/bind)"]
+    B --> C["3. Implicit (obj.fn())"]
+    C --> D["4. Default (standalone)"]
+    D -->|"Lowest"| E["window or undefined"]
+```
+
+```javascript
+function greet() { console.log(this.name); }
+const user = { name: "Raj", greet };
+
+// Implicit vs Explicit — Explicit wins!
+user.greet.call({ name: "Alice" }); // "Alice"
+
+// Explicit vs new — new wins!
+const BoundGreet = greet.bind({ name: "Bob" });
+const obj = new BoundGreet(); // 'this' is the new object, NOT { name: "Bob" }
+```
+
+> **Memory trick:** **N**ew → **E**xplicit → **I**mplicit → **D**efault (think: **NEID** — from highest to lowest priority)
+
+---
+
 ## 📊 Summary Cheat Sheet
 
 | Binding Type | How it's Called | `this` Points To |
@@ -165,3 +192,4 @@ user.showFriends();
 | **Explicit** | `fn.call(obj)` / `fn.apply(obj)` / `fn.bind(obj)` | The explicitly passed object |
 | **`new`** | `new Fn()` | The newly created object |
 | **Arrow** | `() => {}` | Inherited from lexical (parent) scope |
+

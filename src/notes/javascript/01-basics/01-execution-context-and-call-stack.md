@@ -43,6 +43,8 @@ When JavaScript runs, the Global Execution Context (GEC) is created in two phase
 - It finds `var square2`, allocates memory, and assigns it `undefined`.
 - *No code is actually run yet!*
 
+> **What about `let` and `const`?** They are also allocated memory in this phase (they ARE hoisted!), but they are stored in a **separate memory space** (not on the `window` object) and are NOT initialized to `undefined`. Instead, they remain in an inaccessible state called the **Temporal Dead Zone** until their declaration line is executed.
+
 ### ⚡ Phase 2: Code Execution
 - JS runs the code again, line by line.
 - `n` is assigned the actual value of `2`.
@@ -124,3 +126,16 @@ flowchart LR
 - 📦 Whenever a function is invoked, its Execution Context is pushed to the top of the stack.
 - 🗑️ When the function finishes executing, its context is popped off the stack.
 - 🛑 When the whole program finishes, the GEC is popped off, and the Call Stack is empty!
+
+### 💥 Stack Overflow
+What happens if a function keeps calling itself forever? The call stack has a **fixed size limit**. If too many execution contexts pile up, you get a **Stack Overflow** error!
+
+```javascript
+function infinite() {
+    infinite(); // Calls itself forever — no base case!
+}
+infinite(); // ❌ RangeError: Maximum call stack size exceeded
+```
+
+> **This is why recursion always needs a base case** — something that stops the function from calling itself endlessly.
+
