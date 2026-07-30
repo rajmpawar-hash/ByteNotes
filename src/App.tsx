@@ -34,11 +34,15 @@ const navItems = Object.keys(markdownFiles)
   .map(formatPath)
   .sort((a, b) => a.route.localeCompare(b.route)); // Sorts by route, which includes numeric prefixes
 
-// Group navigation by folder (2-level hierarchy)
+// Group navigation by folder (3-level hierarchy)
 type GroupedNav = Record<string, {
   display: string;
   subGroups: Record<string, {
     display: string;
+    subGroups: Record<string, {
+      display: string;
+      items: typeof navItems;
+    }>;
     items: typeof navItems;
   }>;
   items: typeof navItems;
@@ -52,13 +56,30 @@ const groupedNav = navItems.reduce((acc, item) => {
     acc[topFolder] = { display: topDisplay, subGroups: {}, items: [] };
   }
 
-  if (item.parts.length > 2) {
-    // Has a subfolder
+  if (item.parts.length > 3) {
+    // 3 levels deep (e.g. javascript/3-oop/01-this/file)
     const subFolder = item.parts[1];
     const subDisplay = subFolder.replace(/^\d+-/, '').replace(/-/g, ' ').toUpperCase();
     
     if (!acc[topFolder].subGroups[subFolder]) {
-      acc[topFolder].subGroups[subFolder] = { display: subDisplay, items: [] };
+      acc[topFolder].subGroups[subFolder] = { display: subDisplay, subGroups: {}, items: [] };
+    }
+    
+    const subSubFolder = item.parts[2];
+    const subSubDisplay = subSubFolder.replace(/^\d+-/, '').replace(/-/g, ' ').toUpperCase();
+    
+    if (!acc[topFolder].subGroups[subFolder].subGroups[subSubFolder]) {
+      acc[topFolder].subGroups[subFolder].subGroups[subSubFolder] = { display: subSubDisplay, items: [] };
+    }
+    
+    acc[topFolder].subGroups[subFolder].subGroups[subSubFolder].items.push(item);
+  } else if (item.parts.length > 2) {
+    // 2 levels deep
+    const subFolder = item.parts[1];
+    const subDisplay = subFolder.replace(/^\d+-/, '').replace(/-/g, ' ').toUpperCase();
+    
+    if (!acc[topFolder].subGroups[subFolder]) {
+      acc[topFolder].subGroups[subFolder] = { display: subDisplay, subGroups: {}, items: [] };
     }
     acc[topFolder].subGroups[subFolder].items.push(item);
   } else {
@@ -80,6 +101,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       initialState[topKey] = true; // Open top-level by default
       Object.keys(groupedNav[topKey].subGroups).forEach(subKey => {
         initialState[`${topKey}-${subKey}`] = true; // Open sub-levels by default
+        Object.keys(groupedNav[topKey].subGroups[subKey].subGroups || {}).forEach(subSubKey => {
+          initialState[`${topKey}-${subKey}-${subSubKey}`] = true; // Open sub-sub-levels
+        });
       });
     });
     return initialState;
@@ -154,7 +178,7 @@ function Layout({ children }: { children: React.ReactNode }) {
                 {/* Top Level Folder */}
                 <button 
                   onClick={() => toggleFolder(topKey)}
-                  className="w-full flex items-center justify-between mb-2 px-2 py-2 text-sm font-bold tracking-wider text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors uppercase shadow-sm border border-transparent hover:border-[var(--border-color)]"
+                  className="w-full flex items-center justify-between mb-2 px-2 py-2 text-sm font-bold tracking-wider text-left text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors uppercase shadow-sm border border-transparent hover:border-[var(--border-color)]"
                 >
                   <span>{topGroup.display}</span>
                   {isTopOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -191,35 +215,79 @@ function Layout({ children }: { children: React.ReactNode }) {
                       const compoundKey = `${topKey}-${subKey}`;
                       const isSubOpen = openFolders[compoundKey];
                       return (
-                        <div key={subKey} className="mb-2">
+                        <div key={subKey} className="mb-2 mt-3 first:mt-0">
                           <button 
                             onClick={() => toggleFolder(compoundKey)}
-                            className="w-full flex items-center justify-between mb-1 px-2 py-1.5 text-xs font-bold tracking-wider text-gray-900 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded transition-colors uppercase"
+                            className="w-full flex items-center justify-between mb-1 px-2 py-1.5 text-xs font-bold tracking-wider text-left text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors uppercase border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
                           >
                             <span>{subGroup.display}</span>
                             {isSubOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                           </button>
                           
                           {isSubOpen && (
-                            <ul className="space-y-0.5 mt-1 border-l ml-3 pl-2 border-[var(--border-color)]">
-                              {subGroup.items.map(item => {
-                                const isActive = location.pathname === item.route;
+                            <div className="mt-1 border-l ml-3 pl-2 border-[var(--border-color)] space-y-2">
+                              {/* Items in SubGroup */}
+                              {subGroup.items.length > 0 && (
+                                <ul className="space-y-0.5">
+                                  {subGroup.items.map(item => {
+                                    const isActive = location.pathname === item.route;
+                                    return (
+                                      <li key={item.route}>
+                                        <Link
+                                          to={item.route}
+                                          className={`block px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                                            isActive 
+                                              ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 font-bold' 
+                                              : 'text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800/50 dark:hover:text-white'
+                                          }`}
+                                        >
+                                          {item.title}
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              )}
+
+                              {/* Sub Sub Groups */}
+                              {subGroup.subGroups && Object.entries(subGroup.subGroups).map(([subSubKey, subSubGroup]) => {
+                                const subCompoundKey = `${topKey}-${subKey}-${subSubKey}`;
+                                const isSubSubOpen = openFolders[subCompoundKey];
                                 return (
-                                  <li key={item.route}>
-                                    <Link
-                                      to={item.route}
-                                      className={`block px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                                        isActive 
-                                          ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 font-bold' 
-                                          : 'text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800/50 dark:hover:text-white'
-                                      }`}
+                                  <div key={subSubKey} className="mb-1">
+                                    <button 
+                                      onClick={() => toggleFolder(subCompoundKey)}
+                                      className="w-full flex items-center justify-between mb-0.5 px-2 py-1 text-[10px] font-bold tracking-wider text-left text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded transition-colors uppercase"
                                     >
-                                      {item.title}
-                                    </Link>
-                                  </li>
+                                      <span>{subSubGroup.display}</span>
+                                      {isSubSubOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                                    </button>
+                                    
+                                    {isSubSubOpen && (
+                                      <ul className="space-y-0.5 mt-0.5 border-l ml-2 pl-2 border-[var(--border-color)]">
+                                        {subSubGroup.items.map(item => {
+                                          const isActive = location.pathname === item.route;
+                                          return (
+                                            <li key={item.route}>
+                                              <Link
+                                                to={item.route}
+                                                className={`block px-2 py-1 rounded-md text-xs font-medium transition-all ${
+                                                  isActive 
+                                                    ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 font-bold' 
+                                                    : 'text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800/50 dark:hover:text-white'
+                                                }`}
+                                              >
+                                                {item.title}
+                                              </Link>
+                                            </li>
+                                          );
+                                        })}
+                                      </ul>
+                                    )}
+                                  </div>
                                 );
                               })}
-                            </ul>
+                            </div>
                           )}
                         </div>
                       );
@@ -441,6 +509,24 @@ function WelcomePage({ content }: { content: string }) {
                   <li key={subKey}>
                     <div className="text-sm font-bold text-gray-900 dark:text-gray-200 mb-2 uppercase tracking-wide opacity-80">{subGroup.display}</div>
                     <ul className="pl-3 space-y-2 border-l-2 border-gray-200 dark:border-gray-800">
+                      
+                      {/* Sub Sub Groups */}
+                      {subGroup.subGroups && Object.entries(subGroup.subGroups).map(([subSubKey, subSubGroup]) => (
+                        <li key={subSubKey} className="mb-2">
+                          <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">{subSubGroup.display}</div>
+                          <ul className="pl-2 space-y-1 border-l-2 border-gray-100 dark:border-gray-900">
+                            {subSubGroup.items.map(item => (
+                              <li key={item.route}>
+                                <Link to={item.route} className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors block truncate">
+                                  {item.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                      
+                      {/* Direct Items in SubGroup */}
                       {subGroup.items.map(item => (
                         <li key={item.route}>
                           <Link to={item.route} className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors block truncate">
@@ -451,6 +537,8 @@ function WelcomePage({ content }: { content: string }) {
                     </ul>
                   </li>
                 ))}
+                
+                {/* Direct Items in TopGroup */}
                 {topGroup.items.map(item => (
                   <li key={item.route}>
                     <Link to={item.route} className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors block truncate">

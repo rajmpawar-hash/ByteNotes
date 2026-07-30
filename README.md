@@ -13,10 +13,12 @@ ByteNotes is a modern, responsive Progressive Web App (PWA) built specifically f
 Rather than sifting through endless unformatted repositories or boring documentation, ByteNotes offers a stunning, zero-friction reading experience with dark/light modes, seamless typography, and a collapsible sidebar.
 
 **Currently Featuring:**
-- 🚀 **JavaScript Architecture & Engine Internals**
-- 🔄 **Asynchronous JavaScript (Event Loop, Promises)**
-- 🔒 **Closures, Scoping, and Lexical Environments**
-- ...and more!
+- ⚙️ **Core Mechanics** (Execution Context, Call Stack, Scope, Error Handling)
+- 🧩 **Functional Programming** (First-Class Functions, Closures, Currying)
+- 📦 **Object-Oriented Programming** (this Keyword, Prototypes, ES6 Classes)
+- ⏳ **Asynchronous JavaScript** (Event Loop, Promises, async/await)
+- 🌐 **Browser APIs** (DOM Delegation, Storage, Debounce/Throttle)
+- 🎓 **Interview Prep** (Polyfills, Memoization, Output questions)
 
 ---
 
