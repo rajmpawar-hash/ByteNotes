@@ -1,111 +1,54 @@
-# 🗺️ JavaScript — The Complete Mind Map
+# 🗺️ JavaScript — Master Navigation Hub
 
-This is your master navigation hub. Every concept below is covered in a dedicated note. Use this map to understand how all JavaScript concepts connect to each other!
+This is your master navigation hub. Every concept below is covered in a dedicated note. Use this index to easily navigate and understand how all JavaScript concepts connect to each other logically, from the bottom up!
 
-```mermaid
-mindmap
-  root((JavaScript))
-    Engine & Runtime
-      Execution Context
-        Memory Phase
-        Code Phase
-      Call Stack
-        LIFO
-        Push & Pop
-      V8 Architecture
-        Ignition Interpreter
-        TurboFan Compiler
-        JIT Compilation
-      Garbage Collection
-        Mark and Sweep
-    Variables & Scope
-      var / let / const
-        Hoisting
-        Temporal Dead Zone
-      Scope
-        Global Scope
-        Function Scope
-        Block Scope
-      Scope Chain
-        Lexical Environment
-      Shadowing
-        Illegal Shadowing
-      undefined vs not defined
-      window & this
-    Functions
-      First Class Functions
-        Function Statement
-        Function Expression
-      Anonymous Functions
-      Arrow Functions
-      Callback Functions
-        Callback Hell
-        Inversion of Control
-      Higher Order Functions
-        map / filter / reduce
-    Closures
-      Lexical Scope + Function
-      Data Hiding
-      Module Pattern
-      Currying
-    this Keyword
-      Default Binding
-      Implicit Binding
-      Explicit Binding
-        call
-        apply
-        bind
-      new Binding
-      Arrow Function this
-    Prototypes & OOP
-      Prototype Chain
-      Prototypal Inheritance
-      ES6 Classes
-        constructor
-        extends
-        super
-    Objects & ES6+
-      Shallow vs Deep Copy
-      Destructuring
-      Spread & Rest
-      Optional Chaining
-      Nullish Coalescing
-    Async JavaScript
-      Event Loop
-        Call Stack
-        Web APIs
-        Callback Queue
-        Microtask Queue
-      Promises
-        States pending/fulfilled/rejected
-        Chaining
-      async / await
-        try...catch
-      Promise APIs
-        Promise.all
-        Promise.allSettled
-        Promise.race
-        Promise.any
-    DOM & Browser
-      Event Delegation
-        Bubbling
-        Capturing
-      Debounce & Throttle
-      Storage
-        localStorage
-        sessionStorage
-        Cookies
-    Interview Patterns
-      Polyfills
-      Type Coercion
-      Truthy & Falsy
-      Memoization
-      Output Questions
-    Error Handling
-      try / catch / finally
-      Strict Mode
-```
+## 📂 Section Index
 
----
+### ⚙️ 1. Foundations
+| Section | Topics |
+|:--------|:-------|
+| [**01-basics**](/javascript/1-foundations/01-basics/01-execution-context-and-call-stack) | Execution Context, Call Stack, Hoisting, `undefined` vs `not defined` |
+| [**02-scope**](/javascript/1-foundations/02-scope/01-scope-chain-and-lexical-environment) | Scope Chain, Lexical Environment, `let`/`const`/TDZ, Block Scope, Shadowing |
+| [**03-error-handling**](/javascript/1-foundations/03-error-handling/01-try-catch-finally) | `try`/`catch`/`finally`, Strict Mode |
 
-## 📂 Section Index\n\n### ⚙️ 1. Core Mechanics\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-basics** | Execution Context, Call Stack, Hoisting, `window` & `this`, `undefined` vs `not defined` | Universal |\n| **02-scope** | Scope Chain, Lexical Environment, `let`/`const`/TDZ, Block Scope, Shadowing | Universal |\n| **03-error-handling** | `try`/`catch`/`finally`, Strict Mode | Universal |\n\n### 🧩 2. Functional Programming\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-functions** | First-Class Functions, Callbacks, Higher-Order Functions, `map`/`filter`/`reduce` | Universal |\n| **02-closures** | Closures Basics, Data Hiding, Module Pattern, Currying, `var` Loop Bug | Universal |\n\n### 📦 3. Object-Oriented Programming\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-this-keyword** | Binding Rules, `call`/`apply`/`bind` | Universal |\n| **02-objects-and-es6** | Shallow/Deep Copy, Destructuring, Spread/Rest, Optional Chaining | Universal |\n| **03-prototypes** | Prototype Chain, Prototypal Inheritance, ES6 Classes | Universal |\n\n### ⏳ 4. Asynchronous JavaScript\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-async** | Event Loop, V8 Architecture, Promises, `async`/`await`, Promise APIs | Universal |\n\n### 🌐 5. Web APIs\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-dom-and-browser** | Event Delegation, Debounce/Throttle, Storage & Cookies | ⚠️ Browser-specific (skip if Node.js only) |\n\n### 🎓 6. Interview Prep\n| Section | Topics | Notes |\n|:--------|:-------|:------|\n| **01-interview-patterns** | Currying, Polyfills, Type Coercion, Event Loop Output Questions, Memoization | Universal |\n\n> **💡 Note:** Section `01-dom-and-browser` in the Web APIs tier is specifically for browser-based JavaScript. If you only work with Node.js, feel free to skip it entirely — all other sections are runtime-agnostic!\n
+### 🗃️ 2. Objects and Arrays
+| Section | Topics |
+|:--------|:-------|
+| [**01-objects-and-es6**](/javascript/2-objects-and-arrays/01-objects-and-es6/01-shallow-vs-deep-copy) | Shallow/Deep Copy, Destructuring, Spread/Rest, Optional Chaining |
+| [**02-array-methods**](/javascript/2-objects-and-arrays/02-array-methods/01-array-methods) | Array Methods (Mutating vs Non-Mutating, slice vs splice) |
+| [**03-loops-and-iteration**](/javascript/2-objects-and-arrays/03-loops-and-iteration/01-loops-and-iteration) | `for...in`, `for...of`, `while`, `break`/`continue` |
+| [**04-maps-and-sets**](/javascript/2-objects-and-arrays/04-maps-and-sets/01-maps-and-sets) | `Map`, `Set`, `WeakMap`, `WeakSet` |
+
+### 🧩 3. Functions
+| Section | Topics |
+|:--------|:-------|
+| [**01-functions**](/javascript/3-functions/01-functions/01-first-class-functions) | First-Class Functions, Callbacks, Higher-Order Functions, `map`/`filter`/`reduce` |
+| [**02-closures**](/javascript/3-functions/02-closures/01-closures-basics) | Closures Basics, Data Hiding, Module Pattern, Currying, `var` Loop Bug |
+| [**03-generators-and-iterators**](/javascript/3-functions/03-generators-and-iterators/01-generators-and-iterators) | `function*`, `yield`, The Iterator Protocol |
+
+### 📦 4. Object-Oriented Programming (OOP)
+| Section | Topics |
+|:--------|:-------|
+| [**01-this-keyword**](/javascript/4-oop/01-this-keyword/00-window-and-this) | Global `this`, Binding Rules, `call`/`apply`/`bind` |
+| [**02-prototypes**](/javascript/4-oop/02-prototypes/01-prototypal-inheritance) | Prototype Chain, Prototypal Inheritance, ES6 Classes |
+| [**03-type-checking**](/javascript/4-oop/03-type-checking/01-type-checking) | Type Checking, `typeof`, `instanceof`, `Array.isArray` |
+
+### ⏳ 5. Asynchronous JavaScript
+| Section | Topics |
+|:--------|:-------|
+| [**01-intro**](/javascript/5-async/01-intro/01-sync-vs-async) | Synchronous vs Asynchronous, Blocking the Main Thread |
+| [**02-async**](/javascript/5-async/02-async/00-async-glossary) | Event Loop, V8 Architecture, Promises, `async`/`await`, Promise APIs |
+| [**03-modules**](/javascript/5-async/03-modules/01-esm-vs-commonjs) | ES Modules vs CommonJS, Dynamic Imports |
+
+### 🌐 6. Web APIs
+| Section | Topics |
+|:--------|:-------|
+| [**01-dom-and-browser**](/javascript/6-web-apis/01-dom-and-browser/01-event-delegation) ⚠️ *(Browser-specific)* | Event Delegation, Debounce/Throttle, Storage & Cookies |
+
+### 🎓 7. Interview Prep
+| Section | Topics |
+|:--------|:-------|
+| [**01-interview-patterns**](/javascript/7-interview/01-interview-patterns/01-currying-partial-application) | Currying, Polyfills, Type Coercion, Event Loop Output Questions, Memoization |
+| [**02-memory-leaks**](/javascript/7-interview/02-memory-leaks/01-memory-leaks) | Garbage Collection, Mark & Sweep, 4 Common Memory Leaks |
+
+> **💡 Note:** Section `01-dom-and-browser` in the Web APIs tier is specifically for browser-based JavaScript. If you only work with Node.js, feel free to skip it entirely — all other sections are runtime-agnostic!
