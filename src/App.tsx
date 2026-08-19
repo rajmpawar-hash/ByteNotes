@@ -94,20 +94,8 @@ function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   
-  // Initialize all folders as open
-  const [openFolders, setOpenFolders] = useState<Record<string, boolean>>(() => {
-    const initialState: Record<string, boolean> = {};
-    Object.keys(groupedNav).forEach(topKey => {
-      initialState[topKey] = true; // Open top-level by default
-      Object.keys(groupedNav[topKey].subGroups).forEach(subKey => {
-        initialState[`${topKey}-${subKey}`] = true; // Open sub-levels by default
-        Object.keys(groupedNav[topKey].subGroups[subKey].subGroups || {}).forEach(subSubKey => {
-          initialState[`${topKey}-${subKey}-${subSubKey}`] = true; // Open sub-sub-levels
-        });
-      });
-    });
-    return initialState;
-  });
+  // Initialize all folders as closed by default
+  const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({});
 
   const location = useLocation();
 
