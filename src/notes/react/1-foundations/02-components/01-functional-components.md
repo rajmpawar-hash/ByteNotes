@@ -52,15 +52,41 @@ const Header = () => {
 
 When React renders `<Header />`, it will look inside the `Header` function, see `<Title />` and `<Subtitle />`, execute those functions, and inject their returned JSX into the final output.
 
-## Pure Functions in React
+## Pure vs. Impure Functions
 
-React strictly dictates that all Functional Components must act like **Pure Functions** with respect to their props.
+React strictly dictates that all Functional Components must act like **Pure Functions** with respect to their props. To understand this, we must contrast Pure and Impure functions.
 
-A **Pure Function** is a function that:
-1.  Always returns the same output for the same input.
-2.  Does not cause any observable side effects (like modifying external variables or directly mutating DOM).
+### The Pure Function
+A Pure Function is predictable. It follows two strict rules:
+1. **Deterministic:** Given the same exact inputs (`props`), it will *always* return the same exact output (JSX).
+2. **No Side Effects:** It does not change any variables or state outside of its own scope while running.
 
-While components *can* have side effects (handled via the `useEffect` hook) and *can* have internal state (handled via `useState`), the core rendering logic should remain pure. It shouldn't mutate external state during the render phase.
+```javascript
+// ✅ Pure Function
+// It relies strictly on its inputs and mutates nothing outside.
+function add(a, b) {
+  return a + b; 
+}
+```
+
+### The Impure Function
+An Impure Function is unpredictable. It relies on external state, or it mutates external state (a Side Effect).
+
+```javascript
+let total = 0;
+
+// ❌ Impure Function
+// It mutates a variable outside its scope (Side Effect)
+function addToTotal(a) {
+  total += a; 
+  return total;
+}
+```
+
+### Why React Demands Purity
+If a React component was an impure function that mutated external variables during its render phase, the UI would become wildly unpredictable. The Virtual DOM relies on the assumption that if `props` haven't changed, the component's output hasn't changed.
+
+While components *can* eventually cause side effects (like fetching data) or have internal state (via `useState`), **the core rendering logic itself must remain pure**. Any side effects must be strictly isolated inside the `useEffect` hook, completely out of the way of the rendering phase.
 
 ## Why Functional Components over Class Components?
 
