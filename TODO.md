@@ -8,3 +8,6 @@ These features have been brainstormed to elevate the ByteNotes app to a world-cl
 - [ ] **Interactive Code Blocks**: Integrate `react-live` or `sandpack` to allow running and editing JS/React code directly inside the notes.
 - [ ] **Reading Progress & Time Estimator**: Top progress bar and a word-count-based reading time estimator.
 - [ ] **Spaced Repetition / Flashcard Mode**: Parse `> [!IMPORTANT]` or specific tags to auto-generate quizzes and flashcards for active recall.
+
+## Notes Authoring TODOs
+- [ ] Create the **5. Performance and Optimization** React module notes.
