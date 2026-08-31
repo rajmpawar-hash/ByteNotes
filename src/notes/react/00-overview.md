@@ -40,7 +40,7 @@ This is your master navigation hub for the React notes. Every concept below is c
 ### 🧩 7. Advanced Patterns
 | Section | Topics |
 |:--------|:-------|
-| [**01-patterns**](/react/7-advanced-patterns/01-patterns/01-higher-order-components) | Higher-Order Components (HOCs), Controlled vs Uncontrolled, Error Boundaries, Portals |
+| [**01-patterns**](/react/7-advanced-patterns/01-patterns/01-higher-order-components) | Higher-Order Components (HOCs), Controlled vs Uncontrolled, Error Boundaries, Portals, Reactive vs Non-Reactive |
 
 ### 🧪 8. Testing
 | Section | Topics |
