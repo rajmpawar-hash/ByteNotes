@@ -34,25 +34,15 @@ This is your master navigation hub for the React notes. Every concept below is c
 ### 🗄️ 6. Data and State Management
 | Section | Topics |
 |:--------|:-------|
-| [**01-context-api**](/react/6-data-and-state-management/01-context-api/01-prop-drilling) | Prop Drilling, Context API |
-| [**02-redux**](/react/6-data-and-state-management/02-redux/01-redux-toolkit-basics) | Redux Toolkit (Store, Slices, Dispatch, Selectors), RTK Query |
+| [**01-native-patterns**](/react/6-data-and-state-management/01-native-patterns/01-lifting-state-and-prop-drilling) | Prop Drilling, Context API |
+| [**02-redux**](/react/6-data-and-state-management/02-redux/01-why-redux) | Redux Toolkit (Store, Slices, Dispatch, Selectors), Async Thunks |
 
 ### 🧩 7. Advanced Patterns
 | Section | Topics |
 |:--------|:-------|
 | [**01-patterns**](/react/7-advanced-patterns/01-patterns/01-higher-order-components) | Higher-Order Components (HOCs), Controlled vs Uncontrolled, Error Boundaries, Portals, Reactive vs Non-Reactive |
 
-### 🧪 8. Testing
+### 🎓 8. Interview Prep
 | Section | Topics |
 |:--------|:-------|
-| [**01-react-testing**](/react/8-testing/01-react-testing/01-jest-and-rtl) | Jest, React Testing Library, Unit & Integration Testing, Mocking |
-
-### 🏛️ 9. Class Components (Legacy)
-| Section | Topics |
-|:--------|:-------|
-| [**01-class-basics**](/react/9-class-components/01-class-basics/01-lifecycle-methods) | Lifecycle Methods (`componentDidMount`, etc.) |
-
-### 🎓 10. Interview Prep
-| Section | Topics |
-|:--------|:-------|
-| [**01-common-questions**](/react/10-interview-prep/01-common-questions/01-react-interview-faq) | General FAQ, Machine Coding Tasks (Pagination, Autocomplete, Nested Comments) |
+| [**01-machine-coding**](/react/8-interview-prep/01-common-questions/02-machine-coding) | Machine Coding Tasks (Pagination, Autocomplete, Nested Comments) |

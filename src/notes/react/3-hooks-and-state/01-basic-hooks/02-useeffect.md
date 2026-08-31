@@ -1,5 +1,9 @@
 # `useEffect`: Managing Side Effects
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> *"The `useEffect` hook allows functional components to safely perform side effects, like data fetching or DOM manipulation, outside of the pure rendering calculation. It runs asynchronously after the component has rendered and painted the screen. By controlling its dependency array, we can dictate exactly when the effect should run—on mount, on specific state changes, or after every render—and we can return a cleanup function to prevent memory leaks."*
+
 To understand `useEffect`, we first must understand what a **Side Effect** is.
 
 ## What is a Side Effect?
@@ -70,6 +74,12 @@ useEffect(() => {
 > 4. State changes, so React **re-renders** the component.
 > 5. Because there is no dependency array, the `useEffect` runs *again* after this new render.
 > 6. `setCount` is called again... triggering another render... which triggers the effect... forever.
+
+> [!CAUTION]
+> **The "Stale Closure" Interview Gotcha**
+> A very common interview question involves a `setInterval` inside a `useEffect` with an empty dependency array `[]`, attempting to increment a state like `setCount(count + 1)`. 
+> Because the effect only runs once on mount, it creates a "closure" over the *initial* value of `count` (which is 0). The interval will continually run `setCount(0 + 1)`, leaving the UI stuck at `1`.
+> **The Fix:** Use the callback form of the state setter: `setCount(prevCount => prevCount + 1)`. This tells React to use the latest state value regardless of the closure!
 
 ### 2. The Empty Array `[]` (On Mount Only)
 

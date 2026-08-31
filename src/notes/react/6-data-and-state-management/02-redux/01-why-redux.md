@@ -1,5 +1,9 @@
 # Why Redux? (The Flux Architecture)
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> *"Redux is a predictable, global state container based on the Flux architecture. While Context API is great for simple dependency injection, it lacks granular subscriptions and forces all consumers to re-render when any value changes. Redux solves this by maintaining a single, immutable Store outside the React tree. Components only dispatch Actions, Reducers calculate the new state, and components subscribe only to the specific slices of data they need, ensuring maximum performance for complex, high-frequency updates."*
+
 If React has a built-in Context API, why does almost every large enterprise application use Redux? 
 
 As we learned in the Context module, the Context API is great for Dependency Injection (teleporting data), but it is **terrible** for high-frequency Global State Management. When a Context value changes, it indiscriminately forces a re-render of every component consuming it.

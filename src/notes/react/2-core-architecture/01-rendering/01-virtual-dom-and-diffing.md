@@ -1,5 +1,9 @@
 # Virtual DOM and Diffing Algorithm
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> *"The Virtual DOM is a lightweight, in-memory JavaScript representation of the real DOM. Instead of updating the slow browser DOM directly every time state changes, React creates a new Virtual DOM, compares it to the previous one using its O(n) Diffing Algorithm, and calculates the absolute minimal set of changes needed. This 'Reconciliation' process ensures the actual DOM is only updated exactly where necessary, making React highly performant."*
+
 React handles rendering efficiently through the use of the Virtual DOM, the Reconciliation process, and the Diffing Algorithm.
 
 ## The Real DOM Problem

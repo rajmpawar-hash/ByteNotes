@@ -1,4 +1,8 @@
-﻿# React Fiber Architecture
+# React Fiber Architecture
+
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> *"React Fiber is the core reconciliation engine introduced in React 16. Its primary goal is to enable incremental rendering. Unlike the old synchronous Stack Reconciler that could block the main thread and drop frames, Fiber breaks rendering work into interruptible chunks. This allows React to pause rendering, prioritize high-priority updates (like user typing) over low-priority ones (like data fetching), and ensure the UI remains consistently smooth and responsive."*
 
 Introduced in React 16, React Fiber is a complete, backward-compatible rewrite of the React core reconciliation algorithm. It serves as the engine that powers modern React applications.
 

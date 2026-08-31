@@ -136,3 +136,55 @@ function App() {
 | **What it caches** | The returned value of the function. | The function definition itself. |
 | **Primary Use Case**| Skipping expensive mathematical calculations. | Passing stable callbacks to optimized child components. |
 | **Returns** | Any data type (Array, Object, Number). | A Function. |
+
+---
+
+## ⚡ React 18: Concurrent Rendering (Interview Bonus)
+
+While `useMemo` and `useCallback` prevent *unnecessary* renders, React 18 introduced **Concurrent Rendering** hooks that help manage the performance of *necessary but heavy* renders. Interviewers highly value knowledge of these modern features.
+
+### 1. `useTransition`
+By default, all state updates in React are urgent. If you type in an input that filters a list of 10,000 items, the UI will freeze because React is urgently trying to render the massive list.
+`useTransition` lets you mark specific state updates as "non-urgent" (transitions), allowing React to interrupt them to keep the UI responsive (e.g., keeping the input field snappy).
+
+```jsx
+import { useState, useTransition } from 'react';
+
+function SearchList() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [isPending, startTransition] = useTransition(); // The hook
+
+  const handleChange = (e) => {
+    setQuery(e.target.value); // URGENT: Update the input field immediately
+    
+    startTransition(() => {
+      // NON-URGENT: Calculating the massive list can happen in the background
+      setResults(heavyFilter(e.target.value)); 
+    });
+  };
+
+  return (
+    <div>
+      <input value={query} onChange={handleChange} />
+      {isPending ? <p>Loading...</p> : <List data={results} />}
+    </div>
+  );
+}
+```
+
+### 2. `useDeferredValue`
+Similar to `useTransition`, but used when you *receive* a value from above (like a prop) and cannot wrap the state update in `startTransition`. It tells React to use an older value for a heavy component while calculating the new value in the background.
+
+```jsx
+import { useDeferredValue, memo } from 'react';
+
+// Imagine `text` changes rapidly (every keystroke)
+function SlowList({ text }) {
+  // React will "defer" this value. The heavy list will render with the old text 
+  // until the main thread is free to render the new text.
+  const deferredText = useDeferredValue(text);
+  
+  return <HeavyComputedList query={deferredText} />;
+}
+```

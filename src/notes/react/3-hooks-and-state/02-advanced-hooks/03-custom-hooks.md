@@ -172,3 +172,58 @@ If you name your function `fetchRestaurantData()` (no prefix) and try to call `u
 1. **Naming Convention:** The function name MUST start with `use` (e.g., `useAuth`, `useTheme`) as explained above.
 2. **State Isolation:** Just like normal hooks, state is **not shared** between components using the same custom hook. If `Component A` and `Component B` both call `useOnlineStatus`, they each get their own independent instance of the `isOnline` state variable.
 3. **Purity:** A custom hook should be a pure function in the sense that it relies only on its arguments and other hooks.
+
+---
+
+## 💻 Machine Coding Cheat Sheet
+
+In React interviews (especially for frontend roles), you will frequently be asked to write specific Custom Hooks from scratch. Here are the two most commonly asked:
+
+### 1. `useDebounce`
+**Use case:** Delaying an API call while a user is rapidly typing in a search bar.
+
+```jsx
+import { useState, useEffect } from 'react';
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    // Set a timer to update the value after the delay
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    // Cleanup: If 'value' changes BEFORE the delay finishes, 
+    // clear the old timer and start a new one!
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+```
+
+### 2. `useThrottle`
+**Use case:** Limiting how often a function can fire during continuous events like scrolling or window resizing.
+
+```jsx
+import { useState, useEffect, useRef } from 'react';
+
+export function useThrottle(value, limit) {
+  const [throttledValue, setThrottledValue] = useState(value);
+  const lastRan = useRef(Date.now());
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (Date.now() - lastRan.current >= limit) {
+        setThrottledValue(value);
+        lastRan.current = Date.now();
+      }
+    }, limit - (Date.now() - lastRan.current));
+
+    return () => clearTimeout(handler);
+  }, [value, limit]);
+
+  return throttledValue;
+}
+```

@@ -104,8 +104,4 @@ function UserList() {
 }
 ```
 
-> [!NOTE]
-> **The Evolution of Redux**
-> While `createAsyncThunk` is incredibly powerful, writing `pending`, `fulfilled`, and `rejected` handlers for every single API endpoint in a massive application quickly becomes tedious. 
-> 
-> Because of this, the Redux team created **RTK Query**—a complete data fetching and caching solution built right into Redux Toolkit that completely eliminates the need to manually write Thunks or `useEffect` hooks. We will cover this in the next section!
+
