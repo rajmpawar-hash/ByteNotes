@@ -12,5 +12,7 @@ When writing or updating notes in this repository (e.g., React, JavaScript, Node
    - Fenced code blocks with correct language specifiers (e.g., `jsx`, `javascript`).
    - GitHub alerts (`> [!NOTE]`, `> [!WARNING]`, `> [!IMPORTANT]`, etc.) to highlight crucial information, best practices, or common pitfalls.
    - Tables and Mermaid diagrams where they help visualize comparisons, relationships, or architectures.
+8. **Interview-Ready Tone ("The 30-Second Pitch")**: For highly technical, architectural, or frequently tested concepts (e.g., Virtual DOM, Redux, Event Loop), always include a `> [!TIP]` alert block at the very top titled **"The 30-Second Interview Pitch"**. This must contain a concise, highly articulate 2-3 sentence summary that gives the reader the exact phrasing to use in an interview before diving into the deep explanation.
+9. **Machine Coding Focus**: When relevant, dedicate sections or standalone files (e.g., `02-machine-coding.md`) to practical machine coding tasks. Provide production-grade, optimized code snippets (e.g., Debounce, Pagination) heavily commented with the "Why" behind the architecture choices.
 
 *Note for the AI: You must automatically read and apply this context to any request involving creating or modifying notes in this workspace.*
