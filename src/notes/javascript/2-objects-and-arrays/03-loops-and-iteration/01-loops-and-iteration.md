@@ -125,6 +125,46 @@ for (let i = 1; i <= 5; i++) {
 
 ---
 
+## ⚠️ 5. The Loop Declaration Gotcha (`var` vs `let` vs `const`)
+
+It is highly recommended to use `let` in loops, but what happens if you use `const` or `var`?
+
+### Using `const` in Loops
+You **CAN** use `const` in `for...in` and `for...of` loops! 
+```javascript
+const user = { name: "Shubh", age: 22 };
+
+// ✅ This works perfectly!
+for (const key in user) {
+    console.log(key); 
+}
+```
+**Why does it work?** Because in `for...in` and `for...of` loops, a *brand new block scope* is created for every single iteration. `key` is effectively a new constant created from scratch each time the loop runs. (Note: You still cannot reassign `key` *inside* the loop body).
+
+**However, `const` FAILS in a standard `for` loop:**
+```javascript
+// ❌ TypeError: Assignment to constant variable.
+for (const i = 0; i < 5; i++) { 
+    console.log(i);
+}
+```
+**Why?** Because the standard `for` loop explicitly attempts to reassign the same variable (`i++`), which `const` forbids.
+
+### Using `var` in Loops (Dangerous!)
+You **CAN** use `var` in all loops, but it is dangerous because `var` does **not** have block scope. It will "leak" outside of the loop!
+
+```javascript
+for (var i = 0; i < 3; i++) {
+    console.log("Inside:", i);
+}
+
+// ⚠️ 'i' still exists out here and holds the value 3!
+console.log("Outside:", i); 
+```
+If you used `let` or `const`, accessing `i` outside the loop would correctly throw a `ReferenceError`. Using `var` inside a loop with asynchronous code (like `setTimeout`) also causes a famous bug where the timeout callbacks all reference the *final* value of the loop variable!
+
+---
+
 ## 🎯 Common Interview Questions
 
 **Q: What is the main difference between `for...in` and `for...of`?**

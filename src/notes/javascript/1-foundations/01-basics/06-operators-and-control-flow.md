@@ -2,7 +2,7 @@
 
 > [!TIP]
 > **The 30-Second Interview Pitch**
-> JavaScript operators follow strict precedence rules and can trigger implicit type coercion (like the `+` vs `-` operator differences). For iteration, understanding the difference between `for...in` (iterates over enumerable string properties/keys) and `for...of` (iterates over iterable values like Arrays/Strings, but NOT plain objects) is crucial for avoiding runtime errors.
+> JavaScript operators follow strict precedence rules and can trigger implicit type coercion (like the `+` vs `-` operator differences). **Control Flow** is the mechanism by which your code makes decisions and branches its execution paths, primarily handled using `if...else` statements, `switch` statements, and the ternary operator.
 
 ## 1. JavaScript Operators
 
@@ -31,44 +31,67 @@ console.log(++y); // 6 (Increments first, then returns)
 
 ---
 
-## 2. Control Flow: The Loop Gotchas
+## 2. Control Flow
 
-JavaScript provides standard loops (`for`, `while`, `do...while`), but the most frequently tested concepts are `for...in` vs `for...of`.
+Control Flow refers to how your code makes decisions. Without control flow, your program would just execute every single line from top to bottom. Control flow allows the code to *branch* based on logic.
 
-### `for...in` (Iterates Keys)
-Best used for exploring the properties (keys) of an **Object**.
+### 🔀 `if / else if / else`
+The most common way to branch code. It relies on truthy/falsy evaluation.
 
 ```javascript
-const user = { name: "Shubh", age: 22 };
+const age = 20;
 
-for (let key in user) {
-    console.log(key); // Output: "name", "age"
-    console.log(user[key]); // Output: "Shubh", 22
+if (age < 18) {
+    console.log("Too young");
+} else if (age >= 18 && age < 21) {
+    console.log("Adult, but no drinking");
+} else {
+    console.log("Full adult");
 }
 ```
 
-### `for...of` (Iterates Values)
-Best used for iterating over iterable data structures like **Arrays, Strings, Maps, and Sets**.
+### 🚦 `switch` Statements
+When you need to check a single variable against many possible exact values, a `switch` is much cleaner than a massive `if/else` chain.
 
 > [!WARNING]
-> **Gotcha: Plain Objects are NOT Iterable!**
-> If you try to use a `for...of` loop on a standard JavaScript object, it will throw a `TypeError`.
+> **Gotcha: The Missing `break` (Fall-through)**
+> A `switch` statement uses strict equality (`===`). If you forget to add `break;` at the end of a `case`, JavaScript will execute that case AND "fall through" to execute every subsequent case below it, regardless of whether they match!
 
 ```javascript
-// ❌ WRONG: Objects are not iterable
-const user = { name: "Shubh", age: 22 };
-for (let val of user) {
-    console.log(val); // TypeError: user is not iterable
+const role = "editor";
+
+switch (role) {
+    case "admin":
+        console.log("Full Access");
+        break;
+    case "editor":
+        console.log("Can Edit");
+        // Oops, we forgot the break statement!
+    case "viewer":
+        console.log("Can View");
+        break;
+    default:
+        console.log("Unknown Role");
+}
+// Output for "editor" will be:
+// "Can Edit"
+// "Can View" (Because it fell through!)
+```
+
+### ❓ The Ternary Operator
+The ternary operator is the only JavaScript operator that takes three operands. It is frequently used in React as a one-line alternative to `if/else`.
+
+```javascript
+const isPremium = true;
+
+// if/else way
+let greeting;
+if (isPremium) {
+    greeting = "Welcome back, VIP!";
+} else {
+    greeting = "Welcome!";
 }
 
-// ✅ CORRECT: Arrays are iterable
-const numbers = [10, 20, 30];
-for (let num of numbers) {
-    console.log(num); // Output: 10, 20, 30
-}
-
-// ✅ CORRECT: Strings are iterable
-for (let char of "Shubh") {
-    console.log(char); // Output: "S", "h", "u", "b", "h"
-}
+// Ternary way
+const shortGreeting = isPremium ? "Welcome back, VIP!" : "Welcome!";
 ```
