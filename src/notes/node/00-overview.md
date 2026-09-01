@@ -11,6 +11,7 @@ In senior interviews, you will rarely be tested on simple syntax. You will be ri
 |:--------|:-------|
 | [**01-v8-and-libuv**](/node/1-core-architecture/01-v8-and-libuv) | V8 Engine, `libuv`, The Thread Pool, Single-Threaded Myth. |
 | [**02-event-loop**](/node/1-core-architecture/02-event-loop) | The 6 Phases of the Event Loop (Timers, Pending, Idle, Poll, Check, Close). |
+| [**03-commonjs-vs-esm**](/node/1-core-architecture/03-commonjs-vs-esm) | Synchronous `require()` vs Asynchronous `import`, Module Caching, The `__dirname` gotcha. |
 
 ### 🔀 2. Async & The Event-Driven Model
 | Section | Topics |
@@ -23,6 +24,7 @@ In senior interviews, you will rarely be tested on simple syntax. You will be ri
 |:--------|:-------|
 | [**01-buffers**](/node/3-data-and-memory/01-buffers) | Binary Data, V8 Memory limits. |
 | [**02-streams**](/node/3-data-and-memory/02-streams) | Readable, Writable, Duplex, Transform streams. Piping and memory exhaustion. |
+| [**03-garbage-collection**](/node/3-data-and-memory/03-garbage-collection) | V8 Generational GC (New Space vs Old Space), Dangling Closures, Heap Snapshots. |
 
 ### 🚀 4. Scaling & Performance
 | Section | Topics |
