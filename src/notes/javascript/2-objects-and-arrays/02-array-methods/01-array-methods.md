@@ -1,6 +1,10 @@
 # 📚 Array Methods Deep Dive
 
-Arrays in JavaScript are Objects equipped with dozens of powerful built-in methods. A critical concept for interviews is understanding which methods **mutate** (change) the original array, and which methods **return a new array** (non-mutating).
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> JavaScript Arrays come with powerful built-in methods. Crucially, you must distinguish between mutating methods (like `splice`, `push`, `sort`) that modify the original array in memory, and non-mutating methods (like `slice`, `map`, `filter`) that return a new array. Additionally, understand that `map()` transforms and returns a new array, while `forEach()` only iterates for side-effects and returns `undefined`.
+
+Arrays in JavaScript are Objects equipped with dozens of powerful built-in methods. 
 
 ## 1. Mutating vs Non-Mutating Methods
 
@@ -10,10 +14,7 @@ Arrays in JavaScript are Objects equipped with dozens of powerful built-in metho
 | `shift()`, `unshift()` | `slice()` |
 | `splice()` | `flat()` |
 | `reverse()` | `join()` |
-| `fill()` | `includes()`, `indexOf()` |
-
-> **💡 Where are `map`, `filter`, and `reduce`?**
-> These are **Higher-Order Functions** that require passing functions as arguments (callbacks). We will cover them deeply in the [Functions](/javascript/3-functions/01-functions/01-first-class-functions) section once you learn about Callbacks!
+| `fill()`, `sort()` | `map()`, `filter()`, `reduce()` |
 
 ---
 
@@ -22,7 +23,7 @@ Arrays in JavaScript are Objects equipped with dozens of powerful built-in metho
 Interviewers love testing the difference between these two.
 
 ### ✂️ `slice(start, end)` (Non-Mutating)
-Copies a portion of the array into a **new** array.
+Copies a portion of the array into a **new** array from `start` up to (but not including) `end`.
 ```javascript
 const arr = ['a', 'b', 'c', 'd'];
 const copy = arr.slice(1, 3); 
@@ -35,45 +36,94 @@ console.log(arr);  // ['a', 'b', 'c', 'd'] (Original is unchanged)
 Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
 ```javascript
 const arr = ['a', 'b', 'c', 'd'];
-const removed = arr.splice(1, 2, 'X'); 
+const removed = arr.splice(1, 2, 'X', 'Y'); 
 
 console.log(removed); // ['b', 'c'] (What was deleted)
-console.log(arr);     // ['a', 'X', 'd'] (Original IS mutated!)
+console.log(arr);     // ['a', 'X', 'Y', 'd'] (Original IS mutated!)
 ```
 
 ---
 
-## 3. Adding and Removing
+## 3. Iteration & Transformation: `map`, `filter`, `reduce`, `forEach`
 
-- **`push()`**: Adds to the **end**. Returns new length. (Mutating)
-- **`pop()`**: Removes from the **end**. Returns the removed item. (Mutating)
-- **`unshift()`**: Adds to the **beginning**. Returns new length. (Mutating)
-- **`shift()`**: Removes from the **beginning**. Returns the removed item. (Mutating)
+### `map()`
+Transforms every element in an array and returns a **new array**.
+```javascript
+let arr1 = [1, 2, 3];
+let mapArray = arr1.map((e) => e * 2);
+console.log(mapArray); // [2, 4, 6]
+```
 
----
+### `filter()`
+Returns a **new array** containing only elements that pass the given condition.
+```javascript
+const arr = [1, 2, 3, 4, 5];
+let result = arr.filter((num) => num % 2 === 0);
+console.log(result); // [2, 4]
+```
 
-## 4. Searching and Checking
+### `reduce()`
+Reduces the array to a single value (can be a number, string, object, etc.).
+```javascript
+const fruits = ["apple", "apple", "banana"];
+const count = fruits.reduce((acc, curr) => {
+    acc[curr] = (acc[curr] || 0) + 1;
+    return acc;
+}, {}); // {} is the initial value for the accumulator
 
-- **`indexOf(item)`**: Returns the first index of the item, or `-1` if not found.
-- **`includes(item)`**: Returns `true` or `false` (Better for `NaN` checks than `indexOf`).
+console.log(count); // { apple: 2, banana: 1 }
+```
 
----
+### `forEach()`
+Iterates over the array but **does not return anything** (returns `undefined`). Used strictly for side effects.
 
-## 5. Sorting 
-
-### `sort()` (Mutating)
-Sorts the elements of an array **in place**.
-🚨 **Gotcha:** By default, `sort()` converts elements to strings and compares their UTF-16 code unit values! 
+> [!WARNING]
+> **Gotchas of `forEach()`**
+> 1. You **cannot** use `break` or `continue` inside a `forEach` loop. If you try, you'll get a syntax error.
+> 2. It always returns `undefined`, so chaining it like `arr.map().forEach().filter()` will fail because `forEach` breaks the chain.
 
 ```javascript
-const nums = [10, 2, 30];
-nums.sort(); // ❌ Result: [10, 2, 30] (Because "10" comes before "2" in strings)
+let arr2 = [1, 2, 3].forEach(e => console.log(e));
+console.log(arr2); // Output: undefined
 ```
-*(To sort numbers properly, you need to pass a callback function to `sort()`, which we will learn about in the next section!)*
+
+---
+
+## 4. Array Destructuring
+
+Extracts elements from an array and assigns them to variables in one line.
+```javascript
+let data = ["first", "second", "third"];
+let [a, b, c] = data;
+
+console.log(a); // "first"
+```
+
+---
+
+## 5. Array-Like Objects
+
+> [!IMPORTANT]
+> **What is an Array-Like Object?**
+> Array-like objects have indexed elements (`obj[0]`) and a `length` property, but they **do not** have array methods like `map()`, `push()`, or `filter()`.
+> Examples: Strings, the `arguments` object in functions, and DOM `NodeList` (from `document.querySelectorAll`).
+
+**How to convert an Array-Like Object to a real Array:**
+1. `Array.from(arrayLike)`
+2. Spread Operator: `[...arrayLike]`
+3. Legacy way: `Array.prototype.slice.call(arrayLike)`
+
+```javascript
+function example() {
+    // arguments is an array-like object
+    let realArray = Array.from(arguments);
+    realArray.push(4); // Now we can use array methods!
+}
+```
 
 ---
 
 ## 🎯 Interview Checklist
-- [ ] Know the difference between `slice` and `splice`.
-- [ ] Memorize which methods mutate the original array.
-- [ ] Understand the default string-based sorting behavior of `sort()`.
+- [ ] `slice` (returns new array) vs `splice` (mutates).
+- [ ] `map` (returns new array) vs `forEach` (returns undefined, no break/continue).
+- [ ] How to convert an Array-Like Object (like `arguments` or `NodeList`) into a real Array.

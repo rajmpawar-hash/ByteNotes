@@ -15,13 +15,22 @@ flowchart TD
 ```
 
 ## 🏗️ 1. Parsing Phase
-Before doing anything, the engine reads your code.
-1. **Lexical Analysis:** Breaks code into "tokens" (keywords, variables, operators).
-2. **Syntax Analysis (AST):** Converts those tokens into an Abstract Syntax Tree (AST).
+Before doing anything, the engine reads your code and breaks it down step-by-step.
+
+1. **JS Plain Code:** The raw text file containing your source code.
+2. **Tokenization (Lexical Analysis):** Breaks the code into "tokens".
+   - `let` -> Keyword
+   - `x` -> Identifier
+   - `=` -> Operator
+   - `10` -> Number
+   - `;` -> Punctuation
+3. **Parsing:** Checks for grammar mistakes (Syntax Errors).
+4. **AST (Abstract Syntax Tree):** Converts the parsed tokens into a tree structure that the engine can understand. For example, `x + y` becomes a tree where `+` is the root node, and `x` and `y` are the leaves.
 
 ```mermaid
 flowchart LR
-    A[const a = 5;] --> B[Tokens: const, a, =, 5] --> C[AST]
+    A[const a = 5;] -->|Tokenize| B[Tokens: const, a, =, 5]
+    B -->|Parse| C[AST]
 ```
 
 ## ⚡ 2. Compilation (JIT Compilation)
