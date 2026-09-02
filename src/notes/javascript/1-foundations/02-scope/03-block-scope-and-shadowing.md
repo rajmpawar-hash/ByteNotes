@@ -85,11 +85,19 @@ console.log(z); // 100 (The global z is untouched!)
 You cannot shadow a `let` variable with a `var` variable inside a block. This is because the `var` tries to leak out to the outer scope, which clashes with the existing `let`!
 
 ```javascript
-let a = 20;
+let a = 20; // Lives in Script/Block memory
 {
     var a = 20; // ❌ SyntaxError: Identifier 'a' has already been declared
 }
 ```
+
+> [!WARNING]
+> **Under the Hood: Why does this conflict if they are in different memory spaces?**
+> You might be thinking: *"Wait, `let` goes into Script memory, and `var` goes into Global memory. So why is there a conflict?"*
+> 
+> The answer lies in the **JavaScript Compilation Phase**. `var` ignores block scope and tries to "escape" the block, hoisting itself to the top of the nearest function or global scope. When it escapes the block, it enters the same lexical environment where `let a` is already declared. 
+> 
+> The JS Engine strictly enforces a rule during the compile phase: **You cannot declare a `var` that hoists into a scope where a `let` or `const` of the same name already exists.** It throws a `SyntaxError` immediately, before the code even runs, to prevent the ambiguity of which `a` you are referring to in the outer scope.
 
 ### ✅ But the reverse IS allowed!
 You CAN shadow a `var` with a `let` inside a block — because `let` stays confined to the block and doesn't try to leak out:

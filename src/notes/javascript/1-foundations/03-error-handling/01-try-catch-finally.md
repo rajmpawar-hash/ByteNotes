@@ -1,5 +1,9 @@
 # 🛡️ try / catch / finally
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> Error handling in JavaScript is primarily managed using `try...catch...finally` blocks. This allows developers to gracefully handle runtime errors without crashing the entire application. The `throw` keyword lets you generate custom errors, and the `finally` block ensures cleanup code runs regardless of whether an error occurred.
+
 Error handling is essential for writing robust JavaScript. The `try...catch...finally` construct lets you gracefully handle errors instead of crashing your entire application.
 
 ```mermaid
@@ -48,6 +52,12 @@ getData();
 // Returns: "success"
 ```
 
+> [!NOTE]
+> **Is the `catch` block mandatory?**
+> No! A `try` block must be followed by either a `catch` block, a `finally` block, or both. You can completely omit the `catch` block if you provide a `finally` block (as seen above). 
+> 
+> **Why do this?** You use `try...finally` (without `catch`) when you *want* the error to crash the current function and bubble up to the caller, but you absolutely need to run some cleanup code first before it leaves the function (like closing a database connection or hiding a loading spinner).
+
 ---
 
 ## 🚨 2. Error Object
@@ -70,7 +80,7 @@ try {
 |:---|:---|
 | `ReferenceError` | Accessing an undeclared variable |
 | `TypeError` | Wrong type operation (e.g., calling non-function) |
-| `SyntaxError` | Invalid JavaScript syntax |
+| `SyntaxError` | Invalid JavaScript syntax (often caught at compile-time) |
 | `RangeError` | Number out of range (e.g., invalid array length) |
 | `URIError` | Invalid URI encoding/decoding |
 
@@ -78,20 +88,23 @@ try {
 
 ## 🔨 3. Throwing Custom Errors
 
-You can throw your own errors using the `throw` keyword:
+You can throw your own errors using the `throw` keyword. You can throw strings, numbers, or (best practice) built-in `Error` objects:
 
 ```javascript
-function divide(a, b) {
-    if (b === 0) {
-        throw new Error("Cannot divide by zero!");
+function withdraw(amount) {
+    const balance = 100;
+    
+    if (amount > balance) {
+        throw new Error("Insufficient funds!");
     }
-    return a / b;
+    
+    return balance - amount;
 }
 
 try {
-    divide(10, 0);
-} catch (error) {
-    console.error(error.message); // "Cannot divide by zero!"
+    withdraw(500);
+} catch (err) {
+    console.log(err.message); // "Insufficient funds!"
 }
 ```
 
@@ -137,6 +150,11 @@ try {
 ```
 
 ### Pitfall 2: Async errors need async handling
+
+> [!WARNING]
+> **Gotcha: Synchronous Only!**
+> A standard `try...catch` only catches **synchronous** errors. If an error happens inside an asynchronous callback (like `setTimeout`), the `try...catch` will miss it!
+
 ```javascript
 // ❌ This DOES NOT catch async errors!
 try {
@@ -146,9 +164,21 @@ try {
 } catch (error) {
     // This will never run! The error is thrown in a different call stack.
 }
+```
 
-// ✅ Use try/catch INSIDE async functions
-// (Note: We will learn all about async/await and fetch in Section 5!)
+*(To handle async errors, you must use `try...catch` inside an `async` function, or use `.catch()` on a Promise).*
+
+**1. Using `.catch()` on a Promise:**
+```javascript
+fetch('https://invalid-url.com/data')
+    .then(response => response.json())
+    .catch(error => {
+        console.error("Caught the async error here!", error.message);
+    });
+```
+
+**2. Using `try...catch` inside an `async` function:**
+```javascript
 async function fetchData() {
     try {
         const response = await fetch("invalid-url");
@@ -156,6 +186,27 @@ async function fetchData() {
     } catch (error) {
         console.error("Caught:", error.message);
     }
+}
+```
+
+---
+
+## 🔄 5. Error Propagation (Bubbling)
+
+If an error is thrown inside a function and that function doesn't have a `try...catch`, the error "bubbles up" the call stack to the nearest `catch` block.
+
+```javascript
+function a() { b(); }
+function b() { c(); }
+function c() { 
+    throw new Error("Deep error!"); 
+}
+
+try {
+    a();
+} catch (err) {
+    // The error bubbles all the way up here!
+    console.log("Caught at the top level:", err.message);
 }
 ```
 

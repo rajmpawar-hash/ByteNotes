@@ -1,5 +1,9 @@
 # ❓ Undefined vs Not Defined
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> In JavaScript, `undefined` means a variable has been declared and allocated memory, but hasn't been assigned a value yet. `not defined` (ReferenceError) means the variable was never declared at all, so no memory exists for it.
+
 In JavaScript, `undefined` and `not defined` might sound like the exact same thing in English, but they mean **two completely different things** to the JS Engine!
 
 ```mermaid

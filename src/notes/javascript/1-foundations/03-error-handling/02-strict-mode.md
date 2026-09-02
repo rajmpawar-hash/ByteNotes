@@ -53,6 +53,9 @@ function sum(a, a, c) { // ❌ SyntaxError: Duplicate parameter name
     return a + a + c;
 }
 ```
+> [!NOTE]
+> **What happens without strict mode?** 
+> It actually executes without an error! However, the last parameter silently overwrites the previous ones. If you called `sum(1, 2, 3)`, inside the function `a` would equal `2` (the second argument), and the `1` is lost. This is almost always a bug, which is why strict mode blocks it.
 
 ### 2.3 — Assigning to Read-Only Properties
 ```javascript
@@ -80,6 +83,11 @@ function showThis() {
 showThis(); // undefined (NOT window!)
 // Without strict mode, this = window (global object)
 ```
+> [!NOTE]
+> **Why is this beneficial?**
+> Without strict mode, calling a plain function binds `this` to the global object (`window`). If you accidentally wrote `this.name = "John"` inside a plain function, you would silently pollute the global namespace and overwrite global variables! 
+> 
+> With strict mode, `this` remains `undefined`. If you accidentally write `this.name = "John"`, it immediately throws a `TypeError: Cannot set properties of undefined`, saving you from hard-to-find global state bugs.
 
 ### 2.6 — Octal Literals
 ```javascript
