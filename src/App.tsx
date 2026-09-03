@@ -605,6 +605,10 @@ function MarkdownViewer({ content }: { content: string }) {
                 </a>
               );
             },
+            pre(props) {
+              const { node, className, ...rest } = props;
+              return <pre className={`group ${className || ''}`} {...rest} />;
+            },
             code(props) {
               const {children, className, node, ...rest} = props;
               const match = /language-(\w+)/.exec(className || '');

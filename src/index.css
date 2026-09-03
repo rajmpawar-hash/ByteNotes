@@ -76,7 +76,7 @@
 }
 
 .markdown-body pre {
-  @apply p-4 rounded-xl overflow-x-auto text-sm my-6 bg-[#0d1117] border border-[var(--border-color)] shadow-sm relative group;
+  @apply p-4 rounded-xl overflow-x-auto text-sm my-6 bg-[#0d1117] border border-[var(--border-color)] shadow-sm relative;
 }
 
 .markdown-body pre code {
