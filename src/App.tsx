@@ -101,7 +101,7 @@ function CodeBlock({ children, className, ...rest }: any) {
     <>
       <button
         onClick={handleCopy}
-        className="absolute right-2 top-2 p-1.5 rounded-md bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 opacity-0 group-hover/pre:opacity-100 transition-all border border-gray-600 shadow-sm z-10 flex items-center gap-1 font-sans text-xs"
+        className="absolute right-2 top-2 p-1.5 rounded-md bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 opacity-0 group-hover:opacity-100 transition-all border border-gray-600 shadow-sm z-10 flex items-center gap-1 font-sans text-xs"
         title="Copy code"
       >
         {copied ? (
