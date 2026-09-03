@@ -122,9 +122,33 @@ function Layout({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [searchQuery, setSearchQuery] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setShowScrollTop(e.currentTarget.scrollTop > 300);
+    const target = e.currentTarget;
+    const currentScrollY = target.scrollTop;
+    
+    // Scroll To Top Button
+    setShowScrollTop(currentScrollY > 300);
+
+    // Reading Progress
+    const scrollHeight = target.scrollHeight - target.clientHeight;
+    if (scrollHeight > 0) {
+      setScrollProgress((currentScrollY / scrollHeight) * 100);
+    } else {
+      setScrollProgress(0);
+    }
+
+    // Smart Header
+    if (currentScrollY > lastScrollY + 10 && currentScrollY > 100) {
+      setHeaderVisible(false);
+    } else if (currentScrollY < lastScrollY - 10 || currentScrollY < 50) {
+      setHeaderVisible(true);
+    }
+    setLastScrollY(currentScrollY);
   };
 
   const scrollToTop = () => {
@@ -256,7 +280,12 @@ function Layout({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Sidebar */}
-      <aside className={`
+      <aside 
+        onTouchStart={(e) => setTouchStartX(e.targetTouches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchStartX - e.changedTouches[0].clientX > 50) setSidebarOpen(false);
+        }}
+        className={`
         fixed inset-y-0 left-0 z-50 w-72 bg-[var(--sidebar-bg)] border-r border-[var(--border-color)] flex flex-col
         transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -426,7 +455,11 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        <header className="sticky top-0 z-30 flex items-center justify-between px-4 py-4 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--border-color)] lg:justify-end lg:px-8">
+        <div 
+          className="fixed top-0 left-0 h-1 bg-primary-500 z-[60] transition-all duration-150 ease-out" 
+          style={{ width: `${scrollProgress}%` }}
+        />
+        <header className={`sticky top-0 z-30 flex items-center justify-between px-4 py-4 bg-[var(--bg-color)]/90 backdrop-blur-md border-b border-[var(--border-color)] lg:justify-end lg:px-8 transform transition-transform duration-300 ${headerVisible ? 'translate-y-0' : '-translate-y-full'}`}>
           <div className="flex items-center lg:hidden">
             <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
               <Menu size={24} />
@@ -493,26 +526,26 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Next/Prev Navigation */}
             {currentItem && (
-              <div className="mt-16 flex justify-between items-center border-t border-[var(--border-color)] pt-8">
+              <div className="mt-16 flex flex-col sm:flex-row justify-between items-stretch gap-4 border-t border-[var(--border-color)] pt-8">
                 {prevItem ? (
-                  <Link to={prevItem.route} className="flex flex-col items-start hover:text-primary-500 transition-colors group w-1/2 pr-4">
-                    <span className="text-xs text-gray-900 dark:text-gray-400 uppercase tracking-wider mb-1 font-bold">Previous</span>
-                    <span className="font-medium text-base flex items-center text-gray-900 dark:text-gray-200 group-hover:text-primary-500 transition-colors">
-                      <ChevronLeft size={18} className="mr-1 -ml-1 transition-transform group-hover:-translate-x-1" /> 
-                      <span className="truncate">{prevItem.title}</span>
+                  <Link to={prevItem.route} className="flex flex-col items-start p-4 sm:p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--sidebar-bg)] hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-primary-500/50 hover:shadow-md transition-all group w-full sm:w-1/2 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 font-bold flex items-center gap-1 z-10"><ChevronLeft size={14} /> Previous</span>
+                    <span className="font-semibold text-base sm:text-lg text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-2 z-10">
+                      {prevItem.title}
                     </span>
                   </Link>
-                ) : <div className="w-1/2" />}
+                ) : <div className="hidden sm:block w-1/2" />}
                 
                 {nextItem ? (
-                  <Link to={nextItem.route} className="flex flex-col items-end hover:text-primary-500 transition-colors group w-1/2 pl-4 text-right">
-                    <span className="text-xs text-gray-900 dark:text-gray-400 uppercase tracking-wider mb-1 font-bold">Next</span>
-                    <span className="font-medium text-base flex items-center text-gray-900 dark:text-gray-200 group-hover:text-primary-500 transition-colors">
-                      <span className="truncate">{nextItem.title}</span>
-                      <ChevronRight size={18} className="ml-1 -mr-1 transition-transform group-hover:translate-x-1" />
+                  <Link to={nextItem.route} className="flex flex-col items-end text-right p-4 sm:p-6 rounded-2xl border border-[var(--border-color)] bg-[var(--sidebar-bg)] hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-primary-500/50 hover:shadow-md transition-all group w-full sm:w-1/2 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-l from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 font-bold flex items-center gap-1 z-10">Next <ChevronRight size={14} /></span>
+                    <span className="font-semibold text-base sm:text-lg text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-2 z-10">
+                      {nextItem.title}
                     </span>
                   </Link>
-                ) : <div className="w-1/2" />}
+                ) : <div className="hidden sm:block w-1/2" />}
               </div>
             )}
           </div>
