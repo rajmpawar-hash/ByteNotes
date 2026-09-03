@@ -37,7 +37,7 @@ Makes the object **partially immutable**.
 const user = { name: "Raj" };
 Object.seal(user);
 
-user.name = "Shubham"; // ✅ Works! We can change existing values.
+user.name = "Raj"; // ✅ Works! We can change existing values.
 user.age = 25;         // ❌ Fails. Cannot add new properties.
 delete user.name;      // ❌ Fails. Cannot delete.
 
@@ -83,7 +83,7 @@ A `Proxy` is a "middleman" that wraps around an object and intercepts interactio
 - **handler**: An object containing "traps" (functions like `get`, `set`, `deleteProperty`) that define the custom behavior.
 
 ```javascript
-const user = { name: "Shubham", age: 25 };
+const user = { name: "Raj", age: 25 };
 
 const proxyUser = new Proxy(user, {
     // Intercept reading a property
@@ -104,7 +104,7 @@ const proxyUser = new Proxy(user, {
     }
 });
 
-console.log(proxyUser.name); // "Shubham"
+console.log(proxyUser.name); // "Raj"
 console.log(proxyUser.city); // "Property Not Found!" (Intercepted!)
 
 proxyUser.age = 26; // Works

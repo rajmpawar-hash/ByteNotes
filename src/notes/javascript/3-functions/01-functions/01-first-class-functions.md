@@ -49,8 +49,8 @@ JavaScript offers several ways to define functions, each with unique behaviors.
 ### 📝 Named Function (Function Declaration)
 A standard way to create a function. These are *fully hoisted* and can be called before they are written.
 ```javascript
-shubh(); // Works!
-function shubh() {
+raj(); // Works!
+function raj() {
     console.log("Hello!");
 }
 ```
@@ -66,7 +66,7 @@ const my_fun = function() {
 ### 🏹 Arrow Function (ES6)
 A concise syntax that also inherits `this` from the surrounding lexical scope (it does not have its own `this` or `arguments` object).
 ```javascript
-const shubhamzz = () => console.log("Hello World!");
+const rajzz = () => console.log("Hello World!");
 ```
 
 ### ⚡ IIFE (Immediately Invoked Function Expression)

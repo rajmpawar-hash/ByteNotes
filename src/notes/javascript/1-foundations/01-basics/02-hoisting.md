@@ -26,15 +26,15 @@ In **Phase 1 (Compilation / Memory Creation)**, JavaScript scans the code and al
 
 ```javascript
 console.log(name); // Output: undefined
-var name = "Shubh";
-console.log(name); // Output: "Shubh"
+var name = "Raj";
+console.log(name); // Output: "Raj"
 ```
 
 *Under the hood execution:*
 ```javascript
 var name;             // Memory Phase: Hoisted as undefined
 console.log(name);    // Execution Phase: Prints undefined
-name = "Shubh";       // Execution Phase: Value assigned
+name = "Raj";       // Execution Phase: Value assigned
 ```
 
 ### 🔒 2. Variable Hoisting (`let` & `const`) & The Temporal Dead Zone (TDZ)
@@ -44,7 +44,7 @@ name = "Shubh";       // Execution Phase: Value assigned
 
 ```javascript
 console.log(name); // ❌ ReferenceError: Cannot access 'name' before initialization
-let name = "Shubh";
+let name = "Raj";
 ```
 
 > [!IMPORTANT]

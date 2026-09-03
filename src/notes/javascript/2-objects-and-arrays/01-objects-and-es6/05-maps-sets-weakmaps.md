@@ -19,7 +19,7 @@ A `Map` holds key-value pairs and remembers the original insertion order of the 
 const myMap = new Map();
 
 // Using different data types as keys
-myMap.set("name", "Shubham");
+myMap.set("name", "Raj");
 myMap.set(1, "Number One");
 myMap.set(true, "Boolean True");
 
@@ -74,7 +74,7 @@ These are special, "weakly referenced" versions of Map and Set.
 
 ### WeakMap Example
 ```javascript
-let user = { name: "Shubham" };
+let user = { name: "Raj" };
 
 const weakMap = new WeakMap();
 weakMap.set(user, "Premium Subscriber");
@@ -84,7 +84,7 @@ console.log(weakMap.get(user)); // "Premium Subscriber"
 // If we remove the reference to the original object...
 user = null;
 
-// The object { name: "Shubham" } is now erased from memory!
+// The object { name: "Raj" } is now erased from memory!
 // It is automatically removed from the WeakMap as well.
 ```
 

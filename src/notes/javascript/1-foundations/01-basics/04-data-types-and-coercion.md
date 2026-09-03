@@ -32,9 +32,9 @@ Reference types store a memory address pointing to the actual data structure in 
 - `Date`, etc.
 
 ```javascript
-const user = { name: "Shubh" };
+const user = { name: "Raj" };
 // Even though it's 'const', the reference doesn't change, but the contents can!
-user.name = "Lingayat"; // ✅ Valid mutation
+user.name = "Pawar"; // ✅ Valid mutation
 ```
 
 ---

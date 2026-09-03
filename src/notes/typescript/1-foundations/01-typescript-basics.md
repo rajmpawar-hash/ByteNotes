@@ -31,7 +31,7 @@ myVar = 42; // ❌ Compile Error: Type 'number' is not assignable to type 'strin
 // Primitives
 const isDone: boolean = false;
 const age: number = 25;
-const firstName: string = "Shubh";
+const firstName: string = "Raj";
 
 // Arrays
 const numbers: number[] = [1, 2, 3];
@@ -59,7 +59,7 @@ interface User {
 }
 
 const user1: User = {
-    name: "Shubh",
+    name: "Raj",
     age: 22
 };
 ```

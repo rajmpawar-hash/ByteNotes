@@ -62,7 +62,7 @@ When importing a default export, you **do not use curly braces**, and you can na
 ```javascript
 import AnyNameIWant from './User.js';
 
-const me = new AnyNameIWant("Shubham");
+const me = new AnyNameIWant("Raj");
 ```
 
 ---

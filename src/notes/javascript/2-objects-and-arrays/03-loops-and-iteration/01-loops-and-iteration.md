@@ -132,7 +132,7 @@ It is highly recommended to use `let` in loops, but what happens if you use `con
 ### Using `const` in Loops
 You **CAN** use `const` in `for...in` and `for...of` loops! 
 ```javascript
-const user = { name: "Shubh", age: 22 };
+const user = { name: "Raj", age: 22 };
 
 // ✅ This works perfectly!
 for (const key in user) {

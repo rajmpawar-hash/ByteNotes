@@ -131,6 +131,6 @@ Function.prototype.myBind = function(context = {}, ...args) {
     };
 };
 
-const boundPrint = printName.myBind({ name: "Shubham" });
-boundPrint(30); // "Shubham is 30"
+const boundPrint = printName.myBind({ name: "Raj" });
+boundPrint(30); // "Raj is 30"
 ```

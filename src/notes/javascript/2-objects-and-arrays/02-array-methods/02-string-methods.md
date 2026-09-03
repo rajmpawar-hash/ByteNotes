@@ -13,7 +13,7 @@ Interviewers frequently test the differences between `substring`, `slice`, and `
 - **`substr(start, length)`**: Extracts starting from `start` for a specific `length`. *(Note: Considered legacy, avoid in modern code).*
 
 ```javascript
-const name = "shubhamzz";
+const name = "rajzz";
 
 console.log(name.slice(-2));        // "zz" (Counts from the end)
 console.log(name.substring(2, 5));  // "ubh" (Characters from index 2 up to 4)
@@ -73,8 +73,8 @@ const dashed = words.join("-"); // "Hello-World"
 > If you declare a string using `new String()`, you are creating an Object, not a primitive! This can cause bugs in strict equality checks. Use `.valueOf()` to extract the primitive value from a String Object.
 
 ```javascript
-const primitiveStr = "Shubh";
-const objectStr = new String("Shubh");
+const primitiveStr = "Raj";
+const objectStr = new String("Raj");
 
 console.log(primitiveStr === objectStr); // ❌ false! One is a string, one is an object.
 console.log(primitiveStr === objectStr.valueOf()); // ✅ true

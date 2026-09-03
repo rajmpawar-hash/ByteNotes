@@ -99,7 +99,7 @@ Polymorphism means a method can take multiple forms.
 function greet(name) { console.log(name); }
 function greet(name, age) { console.log(name, age); }
 
-greet("Shubh"); // Output: "Shubh", undefined (The second function hijacked the call!)
+greet("Raj"); // Output: "Raj", undefined (The second function hijacked the call!)
 ```
 
 ---

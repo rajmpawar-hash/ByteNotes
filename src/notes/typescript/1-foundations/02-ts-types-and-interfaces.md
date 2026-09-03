@@ -11,7 +11,7 @@ TypeScript supports all standard JavaScript types, plus a few additions.
 ```typescript
 let isDone: boolean = false;
 let age: number = 25;
-let firstName: string = "Shubham";
+let firstName: string = "Raj";
 let ids: number[] = [1, 2, 3, 4, 5];
 ```
 

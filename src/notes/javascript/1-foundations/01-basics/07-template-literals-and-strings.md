@@ -10,7 +10,7 @@ Before ES6, concatenating strings and variables required the cumbersome `+` oper
 
 ### The Old Way (Concatenation):
 ```javascript
-const name = "Shubham";
+const name = "Raj";
 const age = 25;
 
 const greeting = "Hello, my name is " + name + " and I am " + age + " years old.";
@@ -18,7 +18,7 @@ const greeting = "Hello, my name is " + name + " and I am " + age + " years old.
 
 ### The ES6 Way (Template Literals):
 ```javascript
-const name = "Shubham";
+const name = "Raj";
 const age = 25;
 
 // Notice the backticks instead of single/double quotes!
