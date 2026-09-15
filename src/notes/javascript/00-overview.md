@@ -1,5 +1,9 @@
 # 🗺️ JavaScript — Master Navigation Hub
 
+> [!TIP]
+> **Interview Tomorrow?**
+> If you are doing last-minute revisions, skip the deep dives and read the [🚀 Rapid Revision Cheat Sheet](/javascript/00-revision-cheat-sheet) instead! It compresses all of JavaScript into a single, high-yield document.
+
 This is your master navigation hub. Every concept below is covered in a dedicated note. Use this index to easily navigate and understand how all JavaScript concepts connect to each other logically, from the bottom up!
 
 ## 📂 Section Index
