@@ -63,8 +63,8 @@ false + 1     // 1 (false → 0)
 
 ```mermaid
 flowchart LR
-    A["+ with a string"] -->|"Concatenation"| B["'5' + 3 = '53'"]
-    C["- * / or + with numbers only"] -->|"Numeric"| D["'5' - 3 = 2"]
+    A["+ with a string"] -->|Concatenation| B["'5' + 3 = '53'"]
+    C["- * / or + with numbers only"] -->|Numeric| D["'5' - 3 = 2"]
 ```
 
 ---
@@ -100,9 +100,9 @@ function(){} // truthy! (function)
 
 ```mermaid
 flowchart TD
-    A["Is it Falsy?"] --> B{"Value?"}
-    B -->|"false, 0, -0, '', null, undefined, NaN"| C["❌ FALSY"]
-    B -->|"Everything else"| D["✅ TRUTHY"]
+    A["Is it Falsy?"] --> B["Value?"]
+    B -->|false, 0, -0, '', null, undefined, NaN| C["❌ FALSY"]
+    B -->|Everything else| D["✅ TRUTHY"]
     
     D --> E["'0', ' ', [], {}, 'false'"]
 ```

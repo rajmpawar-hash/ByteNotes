@@ -33,9 +33,9 @@ console.log(child.hasOwnProperty("greet")); // false — it's inherited!
 
 ```mermaid
 flowchart LR
-    A["child {}"] -->|"__proto__"| B["parent { greet() }"]
-    B -->|"__proto__"| C["Object.prototype { hasOwnProperty, toString, ... }"]
-    C -->|"__proto__"| D["null"]
+    A["child {}"] -->|__proto__| B["parent { greet() }"]
+    B -->|__proto__| C["Object.prototype { hasOwnProperty, toString, ... }"]
+    C -->|__proto__| D["null"]
     
     E["child.greet()"] -.->|"Step 1: Not on child"| A
     A -.->|"Step 2: Found on parent!"| B
@@ -69,11 +69,11 @@ console.log(Person.prototype.__proto__ === Object.prototype); // true!
 
 ```mermaid
 flowchart LR
-    A["raj instance"] -->|"__proto__"| B["Person.prototype { greet() }"]
-    B -->|"__proto__"| C["Object.prototype"]
-    C -->|"__proto__"| D["null"]
+    A["raj instance"] -->|__proto__| B["Person.prototype { greet() }"]
+    B -->|__proto__| C["Object.prototype"]
+    C -->|__proto__| D["null"]
     
-    E["Person function"] -->|".prototype"| B
+    E["Person function"] -->|.prototype| B
 ```
 
 ---

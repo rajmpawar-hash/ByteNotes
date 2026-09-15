@@ -8,7 +8,7 @@ Debounce and Throttle are essential for optimizing performance when dealing with
 
 ```mermaid
 flowchart TD
-    A["User types: a, b, c, d, e rapidly"] --> B{"Strategy?"}
+    A["User types: a, b, c, d, e rapidly"] --> B["Strategy?"]
     B -->|Debounce| C["Wait until user STOPS typing then fire once"]
     B -->|Throttle| D["Fire once every 300ms regardless"]
     B -->|None| E["Fire 5 times! Performance nightmare"]

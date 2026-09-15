@@ -69,12 +69,12 @@ Notice the difference:
 
 ```mermaid
 flowchart TD
-    A[Variable Access] --> B{"Was it declared?"}
-    B -->|"No"| C["❌ ReferenceError: x is not defined"]
-    B -->|"Yes, with var"| D["undefined (placeholder)"]
-    B -->|"Yes, with let/const"| E{"Are we past the declaration line?"}
-    E -->|"No (in TDZ)"| F["❌ ReferenceError: Cannot access before initialization"]
-    E -->|"Yes"| G["✅ Actual value"]
+    A[Variable Access] --> B["Was it declared?"]
+    B -->|No| C["❌ ReferenceError: x is not defined"]
+    B -->|Yes, with var| D["undefined (placeholder)"]
+    B -->|Yes, with let/const| E["Are we past the declaration line?"]
+    E -->|No (in TDZ)| F["❌ ReferenceError: Cannot access before initialization"]
+    E -->|Yes| G["✅ Actual value"]
 ```
 
 ## 🔎 4. The `typeof` Trick

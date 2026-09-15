@@ -98,7 +98,7 @@ async function fetchUserPosts() {
 
 ```mermaid
 flowchart LR
-    A[".then() Chains"] -->|"Same behavior"| B["async/await"]
+    A[".then() Chains"] -->|Same behavior| B["async/await"]
     A -.->|Error handling| C[".catch()"]
     B -.->|Error handling| D["try...catch"]
 ```

@@ -87,9 +87,9 @@ curriedMultiply(2, 3, 4);    // 24
 
 ```mermaid
 flowchart TD
-    A["curry(multiply)"] --> B{"args.length >= fn.length?"}
-    B -->|"Yes (3 args)"| C["Call multiply(a, b, c)"]
-    B -->|"No (< 3 args)"| D["Return new function waiting for more"]
+    A["curry(multiply)"] --> B["args.length >= fn.length?"]
+    B -->|Yes (3 args)| C["Call multiply(a, b, c)"]
+    B -->|No (< 3 args)| D["Return new function waiting for more"]
     D --> B
 ```
 

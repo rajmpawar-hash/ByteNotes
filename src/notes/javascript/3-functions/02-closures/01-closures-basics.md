@@ -95,8 +95,8 @@ childFn(); // 60! — child still remembers a=10 AND b=20
 
 ```mermaid
 flowchart LR
-    A["child()"] -->|"Closure"| B["parent's scope: b = 20"]
-    B -->|"Closure"| C["grandparent's scope: a = 10"]
+    A["child()"] -->|Closure| B["parent's scope: b = 20"]
+    B -->|Closure| C["grandparent's scope: a = 10"]
 ```
 
 > **Key Detail:** The closure captures the **entire lexical environment** of each ancestor, not just the variables the function actually uses. However, modern JS engines are smart enough to garbage-collect unused variables from closures for performance.

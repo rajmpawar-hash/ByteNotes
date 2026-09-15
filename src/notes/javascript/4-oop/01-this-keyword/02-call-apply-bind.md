@@ -8,9 +8,9 @@ flowchart TD
     A --> C["apply()"]
     A --> D["bind()"]
     
-    B -->|"Invokes immediately"| E["Args passed individually"]
-    C -->|"Invokes immediately"| F["Args passed as array"]
-    D -->|"Returns new function"| G["Invoke later"]
+    B -->|Invokes immediately| E["Args passed individually"]
+    C -->|Invokes immediately| F["Args passed as array"]
+    D -->|Returns new function| G["Invoke later"]
 ```
 
 ---

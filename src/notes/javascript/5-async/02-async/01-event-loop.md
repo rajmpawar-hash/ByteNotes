@@ -40,9 +40,9 @@ flowchart TD
             Q2["Delivery Counter (Callback Queue): Regular Food"]
         end
         
-        Waiter -->|"Step 1: Passes cooking task to Kitchen"| Kitchen
-        Kitchen -->|"Step 2: Food is ready! Places on counter"| Counters
-        Counters -->|"Step 3: Event Loop tells free Waiter to pick up"| Waiter
+        Waiter -->|Step 1: Passes cooking task to Kitchen| Kitchen
+        Kitchen -->|Step 2: Food is ready! Places on counter| Counters
+        Counters -->|Step 3: Event Loop tells free Waiter to pick up| Waiter
     end
 ```
 
@@ -91,8 +91,8 @@ flowchart LR
     B["1. VIP Window (Microtask Queue)"]
     C["2. Delivery Counter (Callback Queue)"]
     
-    A -->|"Yes! Drain the VIP Window entirely first!"| B
-    B -->|"VIP is empty! Serve one regular order"| C
+    A -->|Yes! Drain the VIP Window entirely first!| B
+    B -->|VIP is empty! Serve one regular order| C
 ```
 
 > **The Starvation Problem:** Because the Event Loop *must* empty the entire Microtask Queue before touching the Callback Queue, if Microtasks keep generating more Microtasks endlessly, the regular Callback Queue will NEVER run! This is called **starvation**.

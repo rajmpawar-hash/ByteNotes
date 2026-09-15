@@ -126,11 +126,11 @@ console.log(a); // 20 (let is untouched)
 
 ```mermaid
 flowchart TD
-    A["Shadowing Rules"] --> B{"Inner declaration?"}
-    B -->|"let shadowing var"| C["✅ Always allowed"]
-    B -->|"var shadowing let"| D{"Inside a function?"}
-    D -->|"Yes"| E["✅ Allowed (var trapped by function)"]
-    D -->|"No (just a block)"| F["❌ SyntaxError (var leaks out)"]
+    A["Shadowing Rules"] --> B["Inner declaration?"]
+    B -->|let shadowing var| C["✅ Always allowed"]
+    B -->|var shadowing let| D["Inside a function?"]
+    D -->|Yes| E["✅ Allowed (var trapped by function)"]
+    D -->|No (just a block)| F["❌ SyntaxError (var leaks out)"]
 ```
 
 

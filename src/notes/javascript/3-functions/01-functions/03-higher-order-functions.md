@@ -60,3 +60,10 @@ This makes our code incredibly **DRY (Don't Repeat Yourself)**!
 
 **Q: Why use HOFs?**
 - **A:** They promote DRY (Don't Repeat Yourself) code by abstracting logic, allowing you to pass specific behaviors (callbacks) into generic wrappers.
+
+---
+
+> [!NOTE]
+> **What about `map`, `filter`, and `reduce`?**
+> These are the most famous Higher-Order Functions in JavaScript! Because they are built-in array methods, we cover them extensively in the Arrays section. 
+> 👉 See: [Map, Filter, and Reduce](/javascript/2-objects-and-arrays/02-array-methods/01-array-methods)

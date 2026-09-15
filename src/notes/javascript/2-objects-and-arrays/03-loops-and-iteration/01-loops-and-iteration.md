@@ -4,9 +4,9 @@ JavaScript provides several ways to loop through data. The most common point of 
 
 ```mermaid
 flowchart LR
-    A["Data Structures"] --> B{"Is it an Object or Iterable?"}
+    A["Data Structures"] --> B["Is it an Object or Iterable?"]
     B -->|Object| C["for...in"]
-    B -->|Iterable (Array, String)| D["for...of"]
+    B -->|Iterable| D["for...of"]
     
     C --> E["Iterates over KEYS"]
     D --> F["Iterates over VALUES"]

@@ -99,3 +99,6 @@ If you use an object as a key in a `WeakMap`, and all other references to that o
 
 **Q: Why would you use a `WeakMap`?**
 - **A:** To prevent memory leaks. WeakMaps allow the garbage collector to safely delete their keys (which must be objects) if those objects are no longer referenced anywhere else in the application.
+
+**Q: What is the time complexity of searching a Set?**
+- **A:** Searching for an item using `Set.has(value)` is generally `O(1)`, which is significantly faster than using `Array.includes(value)` which is `O(n)`.

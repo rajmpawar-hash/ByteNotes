@@ -4,9 +4,9 @@ Memoization is a performance optimization technique that **caches the results** 
 
 ```mermaid
 flowchart TD
-    A["Function called with args"] --> B{"Seen these args before?"}
-    B -->|"Yes (cache hit)"| C["Return cached result instantly"]
-    B -->|"No (cache miss)"| D["Compute result"]
+    A["Function called with args"] --> B["Seen these args before?"]
+    B -->|Yes (cache hit)| C["Return cached result instantly"]
+    B -->|No (cache miss)| D["Compute result"]
     D --> E["Store in cache"]
     E --> F["Return result"]
 ```
@@ -99,9 +99,9 @@ expensiveMultiply(3, 7); // "Computing..." → 21
 ```mermaid
 flowchart LR
     A["memoize(fn)"] --> B["Returns wrapper function"]
-    B --> C{"cache.has(key)?"}
-    C -->|"Yes"| D["Return cache.get(key)"]
-    C -->|"No"| E["result = fn(...args)"]
+    B --> C["cache.has(key)?"]
+    C -->|Yes| D["Return cache.get(key)"]
+    C -->|No| E["result = fn(...args)"]
     E --> F["cache.set(key, result)"]
     F --> G["Return result"]
 ```

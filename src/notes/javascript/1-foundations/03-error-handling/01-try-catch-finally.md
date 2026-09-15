@@ -8,9 +8,9 @@ Error handling is essential for writing robust JavaScript. The `try...catch...fi
 
 ```mermaid
 flowchart TD
-    A["try block"] --> B{"Error thrown?"}
-    B -->|"No"| C["Skip catch"]
-    B -->|"Yes"| D["catch block runs"]
+    A["try block"] --> B["Error thrown?"]
+    B -->|No| C["Skip catch"]
+    B -->|Yes| D["catch block runs"]
     C --> E["finally block ALWAYS runs"]
     D --> E
 ```

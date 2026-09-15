@@ -47,9 +47,9 @@ flowchart LR
     A[AST] --> B["Ignition (Interpreter)"]
     B --> C[Bytecode]
     C --> D["Profiler (monitors hot code)"]
-    D -->|"Hot code detected"| E["TurboFan (Compiler)"]
+    D -->|Hot code detected| E["TurboFan (Compiler)"]
     E --> F[Optimized Machine Code]
-    F -->|"Assumptions broken? Deoptimize!"| B
+    F -->|Assumptions broken? Deoptimize!| B
 ```
 
 ## 🏃 3. Execution Phase

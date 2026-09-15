@@ -7,8 +7,8 @@ flowchart TD
     A[Data Types] --> B["Primitives (string, number, boolean)"]
     A --> C["References (objects, arrays, functions)"]
     
-    B -->|"Copied by"| D["VALUE (independent copy)"]
-    C -->|"Copied by"| E["REFERENCE (shared memory!)"]
+    B -->|Copied by| D["VALUE (independent copy)"]
+    C -->|Copied by| E["REFERENCE (shared memory!)"]
 ```
 
 ---
@@ -27,8 +27,8 @@ console.log(original.name); // "Alice" — BOTH changed! 😱
 
 ```mermaid
 flowchart LR
-    A["original"] -->|"points to"| C["{ name: 'Alice', address: {...} }"]
-    B["copy"] -->|"points to"| C
+    A["original"] -->|points to| C["{ name: 'Alice', address: {...} }"]
+    B["copy"] -->|points to| C
 ```
 
 ---

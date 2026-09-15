@@ -36,15 +36,20 @@ console.log(arr);  // ['a', 'b', 'c', 'd'] (Original is unchanged)
 Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
 ```javascript
 const arr = ['a', 'b', 'c', 'd'];
-const removed = arr.splice(1, 2, 'X', 'Y'); 
+// Start at index 1, delete 2 items, and insert 3 new items
+const removed = arr.splice(1, 2, 'X', 'Y', 'Z'); 
 
 console.log(removed); // ['b', 'c'] (What was deleted)
-console.log(arr);     // ['a', 'X', 'Y', 'd'] (Original IS mutated!)
+console.log(arr);     // ['a', 'X', 'Y', 'Z', 'd'] (Original IS mutated! Size grew!)
 ```
 
 ---
 
 ## 3. Iteration & Transformation: `map`, `filter`, `reduce`, `forEach`
+
+> [!TIP]
+> **Higher-Order Functions**
+> `map`, `filter`, and `reduce` are the most famous examples of **Higher-Order Functions** (HOFs). They take a callback function as an argument and execute it on every element in the array.
 
 ### `map()`
 Transforms every element in an array and returns a **new array**.
@@ -81,6 +86,7 @@ Iterates over the array but **does not return anything** (returns `undefined`). 
 > **Gotchas of `forEach()`**
 > 1. You **cannot** use `break` or `continue` inside a `forEach` loop. If you try, you'll get a syntax error.
 > 2. It always returns `undefined`, so chaining it like `arr.map().forEach().filter()` will fail because `forEach` breaks the chain.
+> 3. `forEach` itself **does not mutate** the array, but the callback function you write *can* mutate the original array if you target the array by `index` or modify object properties by reference!
 
 ```javascript
 let arr2 = [1, 2, 3].forEach(e => console.log(e));

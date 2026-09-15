@@ -10,9 +10,9 @@ flowchart TD
     A --> C["sessionStorage"]
     A --> D["Cookies"]
     
-    B -->|"Persists forever"| E["Until manually cleared"]
-    C -->|"Persists until"| F["Tab/window is closed"]
-    D -->|"Persists until"| G["Expiry date"]
+    B -->|Persists forever| E["Until manually cleared"]
+    C -->|Persists until| F["Tab/window is closed"]
+    D -->|Persists until| G["Expiry date"]
 ```
 
 ---

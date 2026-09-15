@@ -4,13 +4,13 @@ The `this` keyword is one of the most confusing parts of JavaScript. Unlike most
 
 ```mermaid
 flowchart TD
-    A["How is the function called?"] --> B{"new keyword?"}
+    A["How is the function called?"] --> B["new keyword?"]
     B -->|Yes| C["this = new empty object"]
-    B -->|No| D{"call/apply/bind?"}
+    B -->|No| D["call/apply/bind?"]
     D -->|Yes| E["this = explicitly passed object"]
-    D -->|No| F{"Called on an object? obj.fn()"}
+    D -->|No| F["Called on an object? obj.fn()"]
     F -->|Yes| G["this = the object before the dot"]
-    F -->|No| H{"Strict mode?"}
+    F -->|No| H["Strict mode?"]
     H -->|Yes| I["this = undefined"]
     H -->|No| J["this = window (global)"]
 ```
@@ -64,8 +64,8 @@ greetFn(); // undefined — this = window (default binding!)
 
 ```mermaid
 flowchart LR
-    A["user.greet()"] -->|"this = user"| B["Raj"]
-    C["const fn = user.greet; fn()"] -->|"this = window"| D["undefined"]
+    A["user.greet()"] -->|this = user| B["Raj"]
+    C["const fn = user.greet; fn()"] -->|this = window| D["undefined"]
 ```
 
 ---
@@ -140,9 +140,14 @@ Arrow functions shine inside callbacks where you *want* to preserve the outer `t
 const user = {
     name: "Raj",
     friends: ["Alice", "Bob"],
+    
+    // 1. We MUST use a regular function here so 'this' points to 'user'
     showFriends: function() {
+        
+        // 2. We MUST use an arrow function here! 
+        // If we used a regular function, it would lose 'this' inside the loop.
         this.friends.forEach((friend) => {
-            // Arrow function inherits 'this' from showFriends
+            // Because it's an arrow function, 'this.name' perfectly inherits "Raj"
             console.log(this.name + " knows " + friend);
         });
     }
@@ -161,10 +166,10 @@ What happens if multiple binding rules apply at the same time? JavaScript resolv
 
 ```mermaid
 flowchart LR
-    A["1. new Binding"] -->|"Highest"| B["2. Explicit (call/apply/bind)"]
+    A["1. new Binding"] -->|Highest| B["2. Explicit (call/apply/bind)"]
     B --> C["3. Implicit (obj.fn())"]
     C --> D["4. Default (standalone)"]
-    D -->|"Lowest"| E["window or undefined"]
+    D -->|Lowest| E["window or undefined"]
 ```
 
 ```javascript

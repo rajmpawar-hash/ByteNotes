@@ -68,3 +68,7 @@ const goodProduct = {
     }
 };
 ```
+
+> [!NOTE]
+> **Is the underscore (`_`) mandatory?**
+> No! The `_` prefix is simply a widely accepted developer convention to signal "this is an internal variable, don't touch it directly." JavaScript doesn't enforce it. To prevent the infinite loop, the internal variable simply needs to have a **different name** than the getter/setter. You could use `this.internalPrice`, `this.secretPrice`, or anything else!

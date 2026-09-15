@@ -33,9 +33,9 @@ console.log(user?.address?.city); // undefined (no crash!)
 
 ```mermaid
 flowchart TD
-    A["user?.address?.city"] --> B{"Is user null/undefined?"}
+    A["user?.address?.city"] --> B["Is user null/undefined?"]
     B -->|Yes| C["Return undefined"]
-    B -->|No| D{"Is user.address null/undefined?"}
+    B -->|No| D["Is user.address null/undefined?"]
     D -->|Yes| C
     D -->|No| E["Return user.address.city"]
 ```
@@ -69,13 +69,13 @@ const result2 = count ?? 10; // 0  — CORRECT! 0 is not null/undefined
 
 ```mermaid
 flowchart TD
-    A["value || default"] --> B{"Is value falsy?"}
-    B -->|"0, '', false, null, undefined"| C["Returns default"]
-    B -->|"truthy"| D["Returns value"]
+    A["value || default"] --> B["Is value falsy?"]
+    B -->|0, '', false, null, undefined| C["Returns default"]
+    B -->|truthy| D["Returns value"]
     
-    E["value ?? default"] --> F{"Is value null or undefined?"}
-    F -->|"null, undefined ONLY"| G["Returns default"]
-    F -->|"0, '', false, truthy"| H["Returns value"]
+    E["value ?? default"] --> F["Is value null or undefined?"]
+    F -->|null, undefined ONLY| G["Returns default"]
+    F -->|0, '', false, truthy| H["Returns value"]
 ```
 
 ### Examples:

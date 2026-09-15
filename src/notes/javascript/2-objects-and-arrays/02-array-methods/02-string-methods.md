@@ -13,10 +13,10 @@ Interviewers frequently test the differences between `substring`, `slice`, and `
 - **`substr(start, length)`**: Extracts starting from `start` for a specific `length`. *(Note: Considered legacy, avoid in modern code).*
 
 ```javascript
-const name = "rajzz";
+const name = "rajpawar";
 
-console.log(name.slice(-2));        // "zz" (Counts from the end)
-console.log(name.substring(2, 5));  // "ubh" (Characters from index 2 up to 4)
+console.log(name.slice(-3));        // "war" (Counts from the end)
+console.log(name.substring(3, 6));  // "paw" (Characters from index 3 up to 5)
 ```
 
 ## 2. Searching & Regular Expressions

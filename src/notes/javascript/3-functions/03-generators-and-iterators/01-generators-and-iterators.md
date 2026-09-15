@@ -73,8 +73,30 @@ for (const letter of abc()) {
 
 ---
 
-## ♾️ 3. Infinite Generators
+## 🏓 3. Passing Values back into `next()`
+
+You can actually pass values back *into* the generator by providing an argument to `.next()`. This replaces the entire `yield` expression with the passed value!
+
+```javascript
+function* mathGenerator() {
+    const x = yield "Give me a number";
+    const y = yield "Give me another number";
+    yield `The sum is ${x + y}`;
+}
+
+const mathGen = mathGenerator();
+
+console.log(mathGen.next());       // { value: 'Give me a number', done: false }
+console.log(mathGen.next(10));     // Passes 10 to 'x' -> { value: 'Give me another number', done: false }
+console.log(mathGen.next(20));     // Passes 20 to 'y' -> { value: 'The sum is 30', done: false }
+```
+
+---
+
+## ♾️ 4. Infinite Generators and Real World Uses
 Because generators pause execution, you can safely write infinite loops inside them without crashing your browser! They will only generate the next number when you explicitly ask for it.
+
+> **Real World Use Case:** Libraries like **Redux Saga** use Generators heavily to manage complex, long-running asynchronous flows in Redux without blocking the main thread.
 
 ```javascript
 function* idMaker() {

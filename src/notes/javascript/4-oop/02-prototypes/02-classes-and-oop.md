@@ -6,7 +6,7 @@
 
 ```mermaid
 flowchart TD
-    A["ES6 class syntax"] -->|"Under the hood"| B["Constructor Function + Prototype"]
+    A["ES6 class syntax"] -->|Under the hood| B["Constructor Function + Prototype"]
     A --> C["Cleaner syntax"]
     A --> D["extends / super"]
     A --> E["static methods"]
