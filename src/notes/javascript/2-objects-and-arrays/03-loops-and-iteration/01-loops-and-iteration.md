@@ -14,6 +14,23 @@ flowchart LR
 
 ---
 
+## 🆚 Enumerable Properties vs Iterables
+
+To truly master loops, you must understand these two distinct JavaScript concepts:
+
+1. **Enumerable Properties (Applies to Objects):**
+   - When you add a new key-value pair to an object (e.g., `user.name = "Alice"`), that specific key (property) receives an internal `[[Enumerable]]` flag set to `true` by default.
+   - Being "enumerable" simply means that specific key is allowed to show up when you loop over the object. (Built-in prototype methods like `.toString()` have this flag set to `false`, which is why they stay hidden during loops!)
+   - **Consumed by:** `for...in` loops and `Object.keys()`.
+
+2. **Iterables (Applies to Data Collections):**
+   - An Iterable is a data structure that implements the **Iterable Protocol** (it has a special `[Symbol.iterator]()` method under the hood).
+   - This protocol dictates the exact sequence of *values* to return when looping.
+   - **Built-in Iterables:** Arrays, Strings, Maps, Sets. (Plain Objects are **NOT** iterables!).
+   - **Consumed by:** `for...of` loops and the Spread operator (`...`).
+
+---
+
 ## 🗂️ 1. `for...in` (The Object Loop)
 
 The `for...in` loop is designed to iterate over all **enumerable properties** (keys) of an object.

@@ -284,7 +284,7 @@ console.log(config.user?.name); // undefined (safe, no crash)
 > | Concept | Explanation |
 > | :--- | :--- |
 > | **Short-circuiting** | `?.` immediately stops evaluating and returns `undefined` if the reference on its left is nullish. |
-> | **`??` vs `||`** | `||` triggers on ANY falsy value (`0`, `""`, `false`). `??` ONLY triggers on `null` or `undefined`. |
+> | **`??` vs `\|\|` (OR)** | The OR operator `\|\|` triggers on ANY falsy value (`0`, `""`, `false`). `??` ONLY triggers on `null` or `undefined`. |
 >
 > *Related Notes: [03-optional-chaining-nullish](/javascript/2-objects-and-arrays/01-objects-and-es6/03-optional-chaining-nullish)*
 
@@ -309,8 +309,9 @@ for (const val of nums) { console.log(val); }
 > | **`forEach` Gotchas** | Returns `undefined` (cannot chain). Cannot be stopped early with `break` or `continue`. |
 > | **Mutating vs Non-Mutating** | `splice`, `sort`, `reverse`, `push`/`pop` mutate original array. `slice`, `map`, `filter`, `concat` return new arrays. |
 > | **Array-Like Objects** | Objects with indexes and a `length` (like `NodeList` or `arguments`). Convert using `Array.from(obj)` or `[...obj]`. |
+> | **Enumerable vs Iterable** | **Enumerables** (Objects) assign an `[[Enumerable]]` flag to their individual keys (like `user.name`) so they show up in `for...in` loops. **Iterables** (Arrays) implement `[Symbol.iterator]()` to stream values for `for...of`. |
 > | **`for...in` vs `for...of`** | `for...in` loops over keys (enumerable properties) including prototype chain. `for...of` loops over iterable values directly. |
-> | **`const` in Loops** | `const` works in `for...of` (new scope per iteration) but fails in standard `for (let i=0)` if you try `for (const i=0)` because it attempts to reassign `i`. |
+> | **`const` in Loops** | `const` works in BOTH `for...in` and `for...of` (new scope per iteration) but fails in standard `for (let i=0)` if you try `for (const i=0)` because it attempts to reassign `i`. |
 >
 > *Related Notes: [01-array-methods](/javascript/2-objects-and-arrays/02-array-methods/01-array-methods) • [01-loops-and-iteration](/javascript/2-objects-and-arrays/03-loops-and-iteration/01-loops-and-iteration)*
 
