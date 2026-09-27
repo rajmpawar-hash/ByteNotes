@@ -43,7 +43,35 @@ flowchart LR
 
 ---
 
-## 🔨 2. `Object.create()` — Pure Prototypal Inheritance
+## 🆚 2. `__proto__` vs `.prototype` (The Ultimate Confusion)
+
+This is the most common point of confusion in JS inheritance.
+
+* **`__proto__` (The Umbilical Cord):** Lives on **every object**. It is the live link that connects an object to its parent. When JS looks for a property, it walks up this `__proto__` cord.
+* **`.prototype` (The Blueprint Bucket):** Lives **only on Functions** (and ES6 Classes). It is just an object bucket where you store methods. When you create a new object via `new`, the JS engine plugs the new object's `__proto__` cord into the constructor function's `.prototype` bucket.
+
+> [!WARNING]
+> **Gotcha: The Developer Console `[[Prototype]]`**
+> When you inspect an object in the Chrome Console (like an array `[1,2,3]`), you will see a property named `[[Prototype]]`. This is **NOT** the `.prototype` property! `[[Prototype]]` is simply the browser's graphical label for the hidden `__proto__` umbilical cord.
+
+> **The Golden Rule:** `myObject.__proto__ === ConstructorFunction.prototype`
+
+### Summary Matrix
+
+| Entity | Has `__proto__`? | Has `.prototype`? |
+| :--- | :--- | :--- |
+| **Normal Object** (`{}`) | **YES** | **NO** |
+| **Normal Function** (`function()`) | **YES** | **YES** |
+| **ES6 Class** (`class {}`) | **YES** | **YES** |
+| **Arrow Function** (`() => {}`) | **YES** | **NO** |
+
+> [!WARNING]
+> **Gotcha: Arrow Functions**
+> Arrow functions were designed to be lightweight. They do **not** have a `.prototype`, which is exactly why you cannot use the `new` keyword on an arrow function!
+
+---
+
+## 🔨 3. `Object.create()` — Pure Prototypal Inheritance
 
 `Object.create(proto)` creates a new object with its `__proto__` set to the given `proto` object. This is the cleanest way to set up prototype chains!
 
@@ -68,7 +96,7 @@ console.log(dog.isAlive); // true — inherited from animal
 
 ---
 
-## 🛡️ 3. Checking the Chain
+## 🛡️ 4. Checking the Chain
 
 ```javascript
 // Check if a property is directly on the object (not inherited)

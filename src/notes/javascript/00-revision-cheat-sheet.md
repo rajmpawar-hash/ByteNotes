@@ -580,6 +580,8 @@ ElectricCar.prototype.constructor = ElectricCar; // Reset pointer
 > | :--- | :--- |
 > | **The `new` Keyword** | Does 4 things: Creates an empty object `{}`, points `this` to it, links `__proto__` to the constructor's `prototype`, and implicitly returns `this`. |
 > | **Prototype Chain** | A linked series of objects. If JS can't find a property on an object, it looks up the `__proto__` link until it hits `null`. |
+> | **`__proto__` vs `.prototype`** | `__proto__` (often shown as `[[Prototype]]` in Chrome Console) lives on *every* object and is the live link to its parent. `.prototype` lives *only* on Functions (classes) and is just a storage bucket for methods. Rule: `obj.__proto__ === Constructor.prototype`. |
+> | **Arrow Functions & Prototypes** | Arrow functions are lightweight; they do **not** have a `.prototype`. This is why you cannot use `new` on them. |
 > | **Syntactic Sugar** | ES6 Classes are just a cleaner syntax over traditional Constructor Functions and prototypal inheritance. |
 > | **Method Overloading/Multiple Inheritance** | JavaScript does NOT support traditional method overloading or multiple inheritance out of the box (can be faked with `Object.assign`). |
 > | **Static Methods & `this`** | Inside a `static` method, `this` refers to the Class itself. Inside a normal instance method, `this` refers to the instantiated object (it cannot directly access static members). |
