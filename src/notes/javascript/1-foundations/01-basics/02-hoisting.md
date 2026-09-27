@@ -49,7 +49,7 @@ let name = "Raj";
 
 > [!IMPORTANT]
 > **What is the Temporal Dead Zone (TDZ)?**
-> The TDZ is the period of time during execution where a `let` or `const` variable is hoisted but inaccessible. The TDZ ends exactly on the line where the variable is initialized.
+> The TDZ is the period of time during execution where a `let` or `const` variable is hoisted but inaccessible. For a deep dive into how `let`/`const` use a separate memory space and the rules of the TDZ, read [Let, Const, and the Temporal Dead Zone](/javascript/1-foundations/02-scope/02-let-const-temporal-dead-zone).
 
 ### ⚙️ 3. Function Hoisting
 - Regular function declarations are copied **entirely** into memory during the creation phase.

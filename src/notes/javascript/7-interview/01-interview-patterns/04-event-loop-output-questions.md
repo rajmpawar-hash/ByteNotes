@@ -1,5 +1,10 @@
 # 🧪 Event Loop Output Questions
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> When predicting Event Loop output, always remember the priority order: Synchronous code executes immediately, then the **Microtask Queue** (Promises) is completely drained, and only then is a single item from the **Macrotask Queue** (\setTimeout\, \setInterval\) processed. Rinse and repeat.
+
+
 These are the **most popular interview questions** to test your understanding of the Event Loop, Microtask Queue, and Callback Queue. For each question, try to predict the output before reading the answer!
 
 ```mermaid

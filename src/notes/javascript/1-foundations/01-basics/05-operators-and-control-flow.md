@@ -95,3 +95,11 @@ if (isPremium) {
 // Ternary way
 const shortGreeting = isPremium ? "Welcome back, VIP!" : "Welcome!";
 ```
+
+## 🎯 Common Interview Questions
+
+**Q: What is the difference between `++a` and `a++`?**
+- **A:** `++a` (pre-increment) increments the variable first, then returns the updated value. `a++` (post-increment) returns the current value first, then increments the variable in memory.
+
+**Q: What happens if you forget a `break` in a switch statement?**
+- **A:** It causes a "fall-through". The matched case will execute, and then every single case below it will also execute unconditionally until a `break` is encountered or the switch ends.

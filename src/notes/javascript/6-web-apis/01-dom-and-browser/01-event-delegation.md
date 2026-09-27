@@ -1,5 +1,10 @@
 # 🫧 Event Delegation, Bubbling & Capturing
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> **Event Delegation** is a performance-optimizing pattern where you attach a single event listener to a parent element instead of hundreds to its children. It relies on **Event Bubbling**—where events fired on a child propagate up to the parent—allowing you to catch the event and check \event.target\ to see exactly which child was clicked.
+
+
 > ⚠️ **Note:** This section covers **browser-specific** JavaScript. If you only work with Node.js, feel free to skip this entire section!
 
 When you click a button inside a `<div>` inside a `<body>`, which element's event handler fires first? Understanding **event propagation** is critical for building efficient web applications.

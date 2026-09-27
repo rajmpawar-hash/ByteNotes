@@ -451,7 +451,7 @@ console.log(multiply(2)(3)(4)); // 24
 > | **Why Use It?** | Creating specialized reusable functions (e.g., an API fetcher pre-configured with a base URL or a logger pre-configured with a severity level). |
 > | **Infinite Currying** | Implementing `sum(1)(2)(3)...()` relies on returning a function recursively until a termination condition (like an empty call `()`) is met. |
 >
-> *Related Notes: [04-currying](/javascript/3-functions/01-functions/04-currying) • [01-currying-partial-application](/javascript/7-interview/01-interview-patterns/01-currying-partial-application)*
+> *Related Notes: [04-currying](/javascript/3-functions/01-functions/04-currying)*
 
 ### 3.4 Generators & Iterators (`function*`)
 Generators can pause execution using `yield` and resume using `.next()`. They return an Iterator.
@@ -528,7 +528,7 @@ user.arrowGreet(); // undefined
 > | **The "HOW" Rule** | `this` is NOT defined by where the function is written, but HOW it is invoked at runtime. |
 > | **NEID Mnemonic** | 4 Rules of `this`: **N**ew binding (class instantiation), **E**xplicit (`call`/`apply`), **I**mplicit (`obj.fn()`), **D**efault (standalone `fn()`). |
 >
-> *Related Notes: [00-window-and-this](/javascript/4-oop/01-this-keyword/00-window-and-this) • [01-this-rules](/javascript/4-oop/01-this-keyword/01-this-rules)*
+> *Related Notes: [01-window-and-this](/javascript/4-oop/01-this-and-binding/01-window-and-this) • [02-this-rules](/javascript/4-oop/01-this-and-binding/02-this-rules)*
 
 ### 4.2 `call`, `apply`, and `bind`
 - **`call(obj, arg1, arg2)`**: Executes immediately. Passes comma-separated arguments.
@@ -550,28 +550,42 @@ boundFn("TypeScript"); // Executes later
 > | **Memory Trick** | **A**pply uses **A**rrays (`[a, b, c]`). **C**all uses **C**omma-separated arguments (`a, b, c`). |
 > | **`bind` vs Execution** | `call` and `apply` execute the function immediately. `bind` returns a *brand new function* that you can execute later. |
 >
-> *Related Notes: [02-call-apply-bind](/javascript/4-oop/01-this-keyword/02-call-apply-bind)*
+> *Related Notes: [03-call-apply-bind](/javascript/4-oop/01-this-and-binding/03-call-apply-bind)*
 
-### 4.3 Prototypes & Inheritance
+### 4.3 Prototypes, Constructor Functions, & Inheritance
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> Before ES6 Classes, JavaScript used **Constructor Functions** (called with `new`) to create objects and link their `__proto__` to the constructor's `.prototype`. Inheritance (Constructor Linking) is achieved by invoking the parent constructor using `Parent.call(this)` and chaining prototypes with `Object.create(Parent.prototype)`.
+
 - **Prototypes**: Every object has a hidden `[[Prototype]]` (accessible via `__proto__`). If a property isn't found, JS looks up the prototype chain.
-- **Classes**: ES6 `class` is just syntactic sugar over prototypal inheritance.
+- **Classes**: ES6 `class` is just syntactic sugar over prototypal inheritance and Constructor Functions.
 
 ```javascript
-class Person {
-    constructor(name) { this.name = name; }
-    speak() { console.log("Hello"); }
+// 1. Constructor Function
+function Car(make) { this.make = make; }
+Car.prototype.drive = function() { console.log("Vroom"); };
+
+// 2. Inheritance (Constructor Linking)
+function ElectricCar(make, battery) {
+    Car.call(this, make); // Inherit properties
+    this.battery = battery;
 }
-// Under the hood, speak() is added to Person.prototype.speak
+// Inherit methods by linking prototype
+ElectricCar.prototype = Object.create(Car.prototype);
+ElectricCar.prototype.constructor = ElectricCar; // Reset pointer
 ```
 
 > **Micro-Concepts & Edge Cases:**
 > | Concept | Explanation |
 > | :--- | :--- |
+> | **The `new` Keyword** | Does 4 things: Creates an empty object `{}`, points `this` to it, links `__proto__` to the constructor's `prototype`, and implicitly returns `this`. |
 > | **Prototype Chain** | A linked series of objects. If JS can't find a property on an object, it looks up the `__proto__` link until it hits `null`. |
 > | **Syntactic Sugar** | ES6 Classes are just a cleaner syntax over traditional Constructor Functions and prototypal inheritance. |
 > | **Method Overloading/Multiple Inheritance** | JavaScript does NOT support traditional method overloading or multiple inheritance out of the box (can be faked with `Object.assign`). |
+> | **Static Methods & `this`** | Inside a `static` method, `this` refers to the Class itself. Inside a normal instance method, `this` refers to the instantiated object (it cannot directly access static members). |
+> | **Private Fields (JS vs TS)** | In modern JS, `#` makes a field strictly private at runtime. In TypeScript, the `private` keyword is preferred (cleaner, compile-time check) and `#` is generally not needed unless strict runtime privacy is required. |
 >
-> *Related Notes: [01-prototypal-inheritance](/javascript/4-oop/02-prototypes/01-prototypal-inheritance) • [02-classes-and-oop](/javascript/4-oop/02-prototypes/02-classes-and-oop)*
+> *Related Notes: [01-constructor-functions](/javascript/4-oop/02-object-creation/01-constructor-functions) • [02-prototypal-inheritance](/javascript/4-oop/02-object-creation/02-prototypal-inheritance) • [03-classes](/javascript/4-oop/02-object-creation/03-classes)*
 
 ### 4.4 Type Checking (`typeof` vs `instanceof`)
 - **`typeof`**: Checks primitives.
@@ -666,7 +680,7 @@ async function fetchUser() {
 > | **The `.then()` Rule** | Every `.then()` ALWAYS returns a brand new Promise, which is why they can be chained indefinitely. |
 > | **Three States** | Pending (waiting), Fulfilled (success), Rejected (failed). |
 >
-> *Related Notes: [03-promises](/javascript/5-async/02-async/03-promises) • [04-async-await](/javascript/5-async/02-async/04-async-await)*
+> *Related Notes: [03-promises](/javascript/5-async/02-async/03-promises) • [05-async-await](/javascript/5-async/02-async/05-async-await)*
 
 ### 5.4 Promise Combinators
 - **`Promise.all`**: Resolves when ALL resolve. Fails completely if ONE rejects (Fail-fast).
@@ -895,7 +909,7 @@ Function.prototype.myBind = function(context, ...args) {
 > | **`reduce` Gotcha** | When polyfilling `reduce`, you must carefully handle whether an `initialValue` was provided. If not, the first array element becomes the accumulator. |
 > | **Prototype Extension** | You attach polyfills via `Array.prototype.myMethod = function() {...}`. |
 >
-> *Related Notes: [02-polyfills](/javascript/7-interview/01-interview-patterns/02-polyfills) • [01-array-and-function-polyfills](/javascript/8-machine-coding/01-array-and-function-polyfills)*
+> *Related Notes: [01-array-and-function-polyfills](/javascript/8-machine-coding/01-array-and-function-polyfills)*
 
 ### 7.5 Advanced Machine Coding Strategies
 > [!TIP]

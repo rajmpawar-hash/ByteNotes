@@ -85,31 +85,21 @@ greet.call(user); // "Raj" — this is explicitly set to user
 ---
 
 ## 🆕 4. `new` Binding (Constructor Call)
-When a function is called with the `new` keyword, JavaScript does 4 things behind the scenes:
-
-1. Creates a **brand new empty object** `{}`
-2. Sets `this` to point to that new object
-3. Links the object's prototype to the function's prototype
-4. Returns the object (unless the function explicitly returns something else)
+When a function is called with the `new` keyword (used to create objects), JavaScript creates a brand new empty object `{}` and points `this` to that new object.
 
 ```javascript
 function User(name) {
     // this = {} (new empty object, created by 'new')
     this.name = name;
-    // return this (implicit)
 }
 
 const user1 = new User("Raj");
 console.log(user1.name); // "Raj"
 ```
 
-```mermaid
-flowchart LR
-    A["new User('Raj')"] --> B["1. Create {}"]
-    B --> C["2. this = {}"]
-    C --> D["3. this.name = 'Raj'"]
-    D --> E["4. return { name: 'Raj' }"]
-```
+> [!NOTE]
+> **What else does `new` do?**
+> Aside from binding `this`, the `new` keyword also handles prototype linking and implicitly returns the object. We cover the exact under-the-hood steps in the [Constructor Functions](/javascript/4-oop/02-object-creation/01-constructor-functions) chapter.
 
 ---
 

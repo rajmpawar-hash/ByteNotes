@@ -1,5 +1,10 @@
 # 🎭 Type Coercion, `==` vs `===` & Truthy/Falsy
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> JavaScript is loosely typed and uses **Type Coercion** to automatically convert types (e.g. string to number) behind the scenes. This is why you should always use the strict equality operator (\===\) which checks both value and type, instead of the loose equality operator (\==\) which coerces types before checking.
+
+
 JavaScript is a **loosely typed** language, which means it tries to "help" you by automatically converting types behind the scenes. This automatic conversion is called **Type Coercion**, and it causes some of the most confusing behavior in the language.
 
 ```mermaid

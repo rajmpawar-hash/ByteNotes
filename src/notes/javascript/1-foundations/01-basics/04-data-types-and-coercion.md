@@ -95,3 +95,38 @@ console.log("42" - 42); // Output: 0 (String "42" is coerced to Number)
 
 **Why does this happen?** 
 When JS sees a `-`, it knows strings cannot be subtracted, so it tries its best to convert the string to a number. When it sees a `+`, it assumes string concatenation takes priority if a string is present.
+
+---
+
+## 🚦 4. Truthy and Falsy Values
+
+When JavaScript coerces a value to a boolean (e.g., in an `if` statement), it evaluates it as either `truthy` or `falsy`.
+
+There are exactly **7 falsy values** in JavaScript. Memorize them; everything else is truthy!
+
+1. `false`
+2. `0` (Zero)
+3. `-0` (Negative zero)
+4. `0n` (BigInt zero)
+5. `""` (Empty string)
+6. `null`
+7. `undefined`
+8. `NaN` (Not a Number)
+
+```javascript
+if ([]) {
+    console.log("Empty arrays are truthy!"); // This will print!
+}
+
+if ("0") {
+    console.log("String zero is truthy!"); // This will print!
+}
+```
+
+## 🎯 Common Interview Questions
+
+**Q: What is the difference between `==` and `===`?**
+- **A:** `==` performs loose equality (it coerces the types before comparing). `===` performs strict equality (it checks both value AND type). Always use `===` to prevent unexpected coercion bugs.
+
+**Q: Why does `typeof null` return `"object"`?**
+- **A:** This is a famous, unfixable bug in JavaScript's early implementation. `null` is a primitive value, not an object. Fixing it now would break millions of legacy websites.

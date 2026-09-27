@@ -1,5 +1,10 @@
 # 📋 Shallow Copy vs Deep Copy
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> In JavaScript, a **shallow copy** duplicates the top-level properties of an object, but any nested objects still share the same memory reference as the original. A **deep copy** recursively duplicates every level of the object, completely severing all memory references so the copy and original are 100% independent.
+
+
 Understanding the difference between shallow and deep copies is critical because JavaScript handles **primitive types** and **reference types** completely differently.
 
 ```mermaid

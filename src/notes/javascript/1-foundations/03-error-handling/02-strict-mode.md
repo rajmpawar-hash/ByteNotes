@@ -1,5 +1,9 @@
 # 🔒 Strict Mode
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> `"use strict"` is a literal expression that opts into a restricted, safer variant of JavaScript. It intentionally breaks legacy behavior by throwing errors for silent failures (like assigning to read-only properties), prevents accidental global variable creation, and sets `this` to `undefined` instead of the global object in standalone function calls.
+
 Strict mode is a way to opt into a **restricted variant of JavaScript**. It makes several changes to normal JavaScript behavior — catching common coding mistakes and preventing unsafe actions.
 
 ```mermaid

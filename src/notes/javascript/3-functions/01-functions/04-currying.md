@@ -1,16 +1,12 @@
-# 🍛 Currying & Infinite Currying
+# 🍛 Currying & Partial Application
 
 > [!TIP]
 > **The 30-Second Interview Pitch**
-> Currying is an advanced functional programming technique where a function with multiple arguments is transformed into a sequence of nested functions, each taking a single argument (e.g., `f(a, b, c)` becomes `f(a)(b)(c)`). It utilizes **closures** to remember the arguments passed in previous calls.
+> **Currying** is an advanced functional programming technique where a function with multiple arguments is transformed into a sequence of nested functions, each taking a single argument (e.g., `f(a, b, c)` becomes `f(a)(b)(c)`). It utilizes **closures** to remember the arguments passed in previous calls. **Partial application** is similar, but it pre-fills *some* arguments and returns a function that takes the rest.
 
 ## 1. What is Currying?
 
 In JavaScript, currying is achieved by returning a function from a function. The inner functions maintain access to the outer function's scope via closures.
-
-### Why use Currying?
-1. **Reusability:** It helps create specialized versions of functions.
-2. **Avoiding Redundancy:** You don't have to pass the same variable repeatedly.
 
 ### Standard Function vs Curried Function
 
@@ -33,24 +29,67 @@ function curriedAdd(a) {
 console.log(curriedAdd(2)(3)(4)); // 9
 ```
 
----
-
-## 2. Real-World Use Case: specialized loggers
-
-Currying is extremely useful for generating specialized, reusable functions.
+### Why use Currying?
+Currying lets you create **specialized functions** from generic ones:
 
 ```javascript
-function createLogger(level) {
-    return function(message) {
-        console.log(`[${level.toUpperCase()}]: ${message}`);
+// Generic logger
+function log(level) {
+    return function(component) {
+        return function(message) {
+            console.log(`[${level}] [${component}]: ${message}`);
+        };
     };
 }
 
-const logError = createLogger('error');
-const logInfo = createLogger('info');
+// Create specialized loggers
+const errorLog = log("ERROR");
+const errorAuth = errorLog("Auth");
+const errorDB = errorLog("Database");
 
-logError("Failed to fetch data!"); // [ERROR]: Failed to fetch data!
-logInfo("Server started on port 3000."); // [INFO]: Server started on port 3000.
+errorAuth("Login failed");   // [ERROR] [Auth]: Login failed
+errorDB("Connection lost");  // [ERROR] [Database]: Connection lost
+```
+
+---
+
+## 2. Generic Curry Utility
+
+*"Write a function that converts any regular function into a curried version."*
+
+```javascript
+function curry(fn) {
+    return function curried(...args) {
+        // If we have enough arguments, call the original function
+        if (args.length >= fn.length) {
+            return fn.apply(this, args);
+        }
+        // Otherwise, return a function that waits for more arguments
+        return function(...nextArgs) {
+            return curried.apply(this, [...args, ...nextArgs]);
+        };
+    };
+}
+
+// Usage:
+function multiply(a, b, c) {
+    return a * b * c;
+}
+
+const curriedMultiply = curry(multiply);
+
+curriedMultiply(2)(3)(4);    // 24
+curriedMultiply(2, 3)(4);    // 24 — partial application also works!
+curriedMultiply(2)(3, 4);    // 24
+curriedMultiply(2, 3, 4);    // 24
+```
+
+```mermaid
+flowchart TD
+    A["curry(multiply)"] --> B["args.length >= fn.length?"]
+    B -->|Yes (3 args)| C["Call multiply(a, b, c)"]
+    B -->|No (< 3 args)| D["Return new function waiting for more"]
+    D --> B
 ```
 
 ---
@@ -90,6 +129,30 @@ const sumES6 = a => b => b !== undefined ? sumES6(a + b) : a;
 
 console.log(sumES6(1)(2)(3)(4)()); // 10
 ```
+
+---
+
+## 4. Partial Application vs Currying
+
+Partial application is related but different: you fix (pre-fill) **some** arguments and return a function that takes the rest. With currying, each function takes exactly one argument; with partial application, a function can take any number.
+
+```javascript
+// Using bind for partial application
+function greet(greeting, name) {
+    return `${greeting}, ${name}!`;
+}
+
+const sayHello = greet.bind(null, "Hello");
+sayHello("Raj");    // "Hello, Raj!"
+sayHello("Alice");  // "Hello, Alice!"
+```
+
+| | Currying | Partial Application |
+|:---|:---|:---|
+| **Arguments per call** | Exactly 1 | Any number |
+| **Chain length** | Always N calls (for N args) | Fewer calls (some args pre-filled) |
+| **Example** | `f(a)(b)(c)` | `f(a, b)(c)` |
+| **Creates** | Chain of unary functions | A new function with fewer params |
 
 ---
 

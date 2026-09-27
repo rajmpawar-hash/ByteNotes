@@ -1,5 +1,10 @@
 # 🚀 Promise APIs (Combinators)
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> Promise APIs (Combinators) handle multiple promises concurrently. Promise.all fails fast if any reject, Promise.allSettled waits for all to finish regardless of outcome, Promise.race returns the very first to settle (success or failure), and Promise.any returns the first to succeed, only failing if all reject.
+
+
 When you need to handle multiple Promises at the same time, JavaScript provides four powerful Promise APIs (also known as Promise Combinators).
 
 ```mermaid

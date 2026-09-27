@@ -1,5 +1,10 @@
 # 🦅 Higher-Order Functions
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> A **Higher-Order Function** is a function that either takes one or more functions as arguments (callbacks) OR returns a function as its result. They enable abstracting logic, promoting DRY, modular code, and are the backbone of functional programming methods like \map\ and \ilter\.
+
+
 A **Higher-Order Function (HOF)** is simply a function that does at least one of the following:
 1. Takes one or more functions as arguments.
 2. Returns a function as its result.

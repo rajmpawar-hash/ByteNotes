@@ -1,5 +1,9 @@
 # ❓ Optional Chaining & Nullish Coalescing
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> **Optional Chaining** (`?.`) allows safe reading of nested object properties without throwing an error if a reference is nullish (it returns `undefined` instead). **Nullish Coalescing** (`??`) is a logical operator that returns its right-hand operand only when its left-hand operand is exactly `null` or `undefined`, preventing bugs where `0` or `""` are mistakenly treated as falsy.
+
 Two modern JavaScript operators that make dealing with `null` and `undefined` values much safer and cleaner.
 
 ```mermaid

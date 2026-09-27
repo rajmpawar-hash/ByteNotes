@@ -42,7 +42,8 @@ class Manager extends Employee {
 ```
 
 > [!NOTE]
-> TypeScript access modifiers are enforced at **compile-time**. When the code is compiled to JavaScript, `private` and `protected` are removed, meaning they do not provide true runtime security. (For true runtime privacy, use modern JS `#` private fields).
+> **TS `private` vs JS `#` (Hash Private Fields)**
+> Modern JavaScript introduced `#` (e.g. `#salary`) for true runtime private fields. However, in TypeScript, you generally **do not need to use the `#` syntax**. The `private` keyword is preferred because it is cleaner and handles type-checking perfectly at compile-time. You only need `#` if you absolutely require strict *runtime* security after compilation.
 
 ---
 

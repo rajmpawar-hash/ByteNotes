@@ -1,5 +1,10 @@
 # 📞 Callback Functions
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> A **Callback Function** is a function passed as an argument into another function to be executed later. They are the foundation of asynchronous JavaScript, allowing us to defer execution until a task (like a network request or timer) completes.
+
+
 Because functions in JavaScript are First-Class Citizens, you can pass a function into another function as an argument. The function that you pass in is called a **Callback Function**.
 
 ```mermaid

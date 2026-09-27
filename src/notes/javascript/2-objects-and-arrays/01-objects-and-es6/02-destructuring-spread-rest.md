@@ -1,5 +1,9 @@
 # 🎁 Destructuring, Spread & Rest
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> Destructuring is a syntax to unpack values from arrays or properties from objects into distinct variables. The Spread operator (`...`) expands iterables into individual elements, while the Rest parameter (`...`) gathers multiple elements and condenses them into a single array.
+
 ES6 introduced three powerful syntactic features that make working with objects and arrays much cleaner. These are used **everywhere** in modern JavaScript and React.
 
 ```mermaid

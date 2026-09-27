@@ -1,5 +1,10 @@
 # 🧠 Memory Management & Leaks
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> JavaScript uses a **Mark-and-Sweep** Garbage Collection algorithm that starts from global roots and deletes anything unreachable. **Memory Leaks** occur when unused objects are accidentally kept reachable, commonly caused by accidental global variables, uncleared intervals, detached DOM elements, and unclosed closures.
+
+
 While low-level languages like C require you to manually allocate and free memory, JavaScript automatically allocates memory when objects are created and frees it when they are not used anymore. This process is called **Garbage Collection (GC)**.
 
 However, "automatic" does not mean "perfect". Understanding memory management is critical for preventing **Memory Leaks** — situations where memory that is no longer needed is not released.

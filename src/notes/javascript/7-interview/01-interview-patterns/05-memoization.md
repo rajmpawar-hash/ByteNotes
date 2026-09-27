@@ -1,5 +1,10 @@
 # 🧠 Memoization
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> **Memoization** is a performance optimization technique that caches the results of expensive function calls. By using closures to maintain a private cache object, the function can instantly return the cached result if called again with the same arguments, instead of recalculating it.
+
+
 Memoization is a performance optimization technique that **caches the results** of expensive function calls. If the function is called again with the **same arguments**, it returns the cached result instead of recomputing.
 
 ```mermaid

@@ -1,5 +1,9 @@
 # 🔭 Scope Chain & Lexical Environment
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> In JavaScript, the **Lexical Environment** consists of the local memory and a reference to the parent's Lexical Environment. The **Scope Chain** is the mechanism where the JavaScript engine sequentially looks up these parent references to resolve a variable, stopping when it finds the variable or throws a `ReferenceError` if it reaches `null` (the parent of the global scope).
+
 Scope dictates where you can access a specific variable or function in your code. But how does JavaScript know where to look? The answer is the **Lexical Environment**.
 
 Let's look at this nested function structure:

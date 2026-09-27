@@ -2,6 +2,11 @@
 
 > [!TIP]
 > **The 30-Second Interview Pitch**
+> In real-world applications, **Closures** are used for data hiding (emulating private variables), function currying, creating stateful functions (like memoization or debouncing), and preserving state in asynchronous callbacks (like \setTimeout\ inside loops).
+
+
+> [!TIP]
+> **The 30-Second Interview Pitch**
 > A Closure is created when a nested function remembers and has access to the variables of its outer (lexical) scope, even after the outer function has finished executing. Closures are heavily used in JavaScript for data encapsulation (private variables), currying, and persisting state across asynchronous callbacks or React Hooks.
 
 Closures aren't just interview trivia; they are used everywhere in professional JavaScript development!

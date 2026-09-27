@@ -1,5 +1,11 @@
 # ⚙️ Generators & Iterators
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> **Generators** (unction*) are special functions that can be paused and resumed on demand using the yield keyword. Instead of executing immediately, they return an **Iterator** object, which adheres to the Iterator Protocol (
+ext() returning {value, done}), allowing for custom iteration flows and pausing asynchronous logic.
+
+
 In JavaScript, regular functions run to completion. Once you call `return`, the function is completely done and its execution context is destroyed.
 
 But what if you wanted to pause a function halfway through, step outside, do something else, and then resume it right where it left off? That's where **Generators** come in!

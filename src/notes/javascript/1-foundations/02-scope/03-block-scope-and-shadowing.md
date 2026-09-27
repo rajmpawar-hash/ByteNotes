@@ -1,5 +1,9 @@
 # 🧱 Block Scope & Shadowing
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> In JavaScript, blocks `{}` create a new scope for `let` and `const`, but `var` ignores blocks and is only confined by functions. **Shadowing** occurs when an inner scope declares a variable with the same name as an outer scope. "Illegal Shadowing" happens when you try to shadow an outer `let` with an inner `var` inside a block, because the `var` tries to escape the block and causes a naming collision.
+
 What exactly is a "Block" in JavaScript? It's simply code grouped together inside curly braces `{ ... }`. 
 We use blocks to group multiple statements together in places where JavaScript expects only a single statement (like inside an `if` statement).
 

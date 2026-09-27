@@ -1,5 +1,10 @@
 # 🗺️ Maps and Sets
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> Maps and Sets are modern ES6 data structures. A **Map** is a collection of key-value pairs where keys can be of *any* data type, preserving insertion order. A **Set** is a collection of unique values, automatically discarding duplicates, making it ideal for fast lookups and array deduplication.
+
+
 ES6 introduced two powerful new data structures: **Map** and **Set** (along with their weak variants). They solve many of the shortcomings of standard Objects and Arrays.
 
 ```mermaid

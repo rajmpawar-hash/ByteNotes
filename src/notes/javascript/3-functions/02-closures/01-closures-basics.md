@@ -1,5 +1,10 @@
 # 🎒 Closures (Basics)
 
+> [!TIP]
+> **The 30-Second Interview Pitch**
+> A **Closure** is a function bundled together with its lexical environment. This allows a function to remember and access variables from its outer (parent) scope even after the parent function has finished executing and its execution context has been destroyed.
+
+
 A **Closure** is one of the most powerful and confusing concepts in JavaScript. 
 
 In simple terms: **A function bundled together with its lexical environment forms a closure.**

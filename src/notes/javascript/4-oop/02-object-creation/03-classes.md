@@ -89,7 +89,47 @@ buddy.speak();
 
 ---
 
-## 🎭 3. Polymorphism in JS
+## ⚡ 3. Static Methods & Fields
+
+The `static` keyword defines a method or field that belongs to the **Class itself**, not to instances of the class. They are often used for utility functions.
+
+```javascript
+class MathUtils {
+    static gravity = 9.81;
+
+    static add(a, b) {
+        return a + b;
+    }
+
+    // Instance method
+    showGravity() {
+        // ❌ ERROR: 'this' inside a normal method refers to the instance, which doesn't have 'gravity'
+        // console.log(this.gravity); 
+        
+        // ✅ CORRECT: You must access it via the Class name or constructor
+        console.log(MathUtils.gravity); 
+        console.log(this.constructor.gravity); 
+    }
+
+    static showInfo() {
+        // ✅ CORRECT: 'this' inside a static method refers to the Class itself!
+        console.log(`Gravity is ${this.gravity}`);
+    }
+}
+
+console.log(MathUtils.add(5, 5)); // 10
+MathUtils.showInfo(); // "Gravity is 9.81"
+
+const math = new MathUtils();
+math.showGravity(); // "9.81"
+// math.add(5, 5); // ❌ TypeError: math.add is not a function
+```
+
+> **The `this` Rule for Static:** Inside a normal instance method, `this` refers to the object instance (so you cannot call `this.staticMethod()`). Inside a static method, `this` refers to the class constructor itself!
+
+---
+
+## 🎭 4. Polymorphism in JS
 
 Polymorphism means a method can take multiple forms.
 1. **Method Overriding:** A child class provides its own implementation of a parent class's method (as seen in the `Dog.speak()` example above).
@@ -104,7 +144,7 @@ greet("Raj"); // Output: "Raj", undefined (The second function hijacked the call
 
 ---
 
-## 🌫️ 4. Abstraction
+## 🌫️ 5. Abstraction
 
 Abstraction means hiding complex implementation details and only showing the essential features to the user.
 

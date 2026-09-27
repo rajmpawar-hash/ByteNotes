@@ -63,6 +63,9 @@ console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
 let a = 10;
 ```
 
+> [!NOTE]
+> For a full explanation of why this happens, see the dedicated note on [Let, Const, and the Temporal Dead Zone](/javascript/1-foundations/02-scope/02-let-const-temporal-dead-zone).
+
 Notice the difference:
 - `x is not defined` → Variable was **never declared** anywhere.
 - `Cannot access 'a' before initialization` → Variable **exists** in memory (hoisted), but you're in the Temporal Dead Zone!

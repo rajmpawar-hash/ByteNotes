@@ -43,42 +43,7 @@ flowchart LR
 
 ---
 
-## 🏭 2. `prototype` vs `__proto__`
-
-This is one of the **most confusing** parts of JavaScript. Let's clear it up:
-
-| Term | What it is | Who has it |
-|:---|:---|:---|
-| `__proto__` | The **link** pointing to the parent object's prototype | Every object |
-| `prototype` | A **property** on constructor functions that becomes the `__proto__` of objects created with `new` | Only functions |
-
-```javascript
-function Person(name) {
-    this.name = name;
-}
-
-Person.prototype.greet = function() {
-    console.log("Hi, I'm " + this.name);
-};
-
-const raj = new Person("Raj");
-
-console.log(raj.__proto__ === Person.prototype); // true!
-console.log(Person.prototype.__proto__ === Object.prototype); // true!
-```
-
-```mermaid
-flowchart LR
-    A["raj instance"] -->|__proto__| B["Person.prototype { greet() }"]
-    B -->|__proto__| C["Object.prototype"]
-    C -->|__proto__| D["null"]
-    
-    E["Person function"] -->|.prototype| B
-```
-
----
-
-## 🔨 3. `Object.create()` — Pure Prototypal Inheritance
+## 🔨 2. `Object.create()` — Pure Prototypal Inheritance
 
 `Object.create(proto)` creates a new object with its `__proto__` set to the given `proto` object. This is the cleanest way to set up prototype chains!
 
@@ -103,7 +68,7 @@ console.log(dog.isAlive); // true — inherited from animal
 
 ---
 
-## 🛡️ 4. Checking the Chain
+## 🛡️ 3. Checking the Chain
 
 ```javascript
 // Check if a property is directly on the object (not inherited)
@@ -122,10 +87,8 @@ dog instanceof Object; // true — Object is in the chain
 ## 🔑 Key Takeaways
 1. JavaScript uses **prototypal inheritance** — objects inherit from objects, not classes.
 2. `__proto__` is the hidden link every object uses to find inherited properties.
-3. `prototype` is a property on constructor functions that becomes the `__proto__` of instances.
-4. The chain ends at `Object.prototype.__proto__` which is `null`.
-5. `Object.create()` is the purest way to set up inheritance.
-
+3. The chain ends at `Object.prototype.__proto__` which is `null`.
+4. `Object.create()` is the purest way to set up inheritance.
 
 ## 🎯 Common Interview Questions
 
