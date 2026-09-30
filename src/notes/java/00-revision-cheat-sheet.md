@@ -171,3 +171,18 @@ Establishes an **IS-A** relationship via `extends`. Java enforces **Single Inher
 | **Exhaustive Switch** | If you `switch` on a Sealed Class, you do not need a `default` case if you cover all permitted subclasses. |
 
 > *Related Notes: [2.7 Modern Data Carriers (Records & Sealed Classes)](./2-oop/07-modern-data-carriers.md)*
+
+## 📦 Phase 3: Deep Data & Exception Handling
+
+### 3.1 Deep String Manipulation
+- **Immutability:** Strings are backed by a `final byte[]`. Cannot be changed. Ensures security and thread-safety.
+- **String Pool:** A cache in the Heap. String literals (`"text"`) use the pool. `new String("text")` bypasses the pool and forces Heap allocation.
+- **`==` vs `.equals()`:** `==` compares memory addresses. `.equals()` compares actual text values. **Always use `.equals()`.**
+
+| Micro-Concepts & Edge Cases | Detail |
+| :--- | :--- |
+| **`StringBuilder` vs `StringBuffer`** | `Builder` is fast and NOT thread-safe (use 99% of the time). `Buffer` is slow and thread-safe. |
+| **The Loop Trap** | Doing `str += "a"` in a loop creates thousands of garbage objects. Always use `StringBuilder.append()` in loops. |
+| **`intern()` method** | Manually forces a Heap string into the String Pool to save memory and allow `==` comparisons. |
+
+> *Related Notes: [3.1 Deep String Manipulation](./3-data-exceptions/01-deep-string-manipulation.md)*
